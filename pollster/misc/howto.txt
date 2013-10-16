@@ -1,0 +1,51 @@
+#HowTo Setup and Make a new File
+
+
+MAKE A SHELL SCRIPT
+FILELIST: question.php, db (made on firstrun), process.php, post.php, shellscript. admin.php? ELSE question w/ flag.
+
+
+TO ASK: Anonymous? Require Logged in? INLINK (where should they be coming from?) OUTLINK (Where are we going to send them)
+
+Where would you like the question script to be?
+NOTE:  THE QUESTIONS WILL BE LINKED TO AND ACCESSED AS FOLLOWED: uvm.edu/~username/.../.../here.php
+#get username
+What is your UVM password? note: this will not be saved anywhere
+
+Question (+) this dialog can always be accessed later via uvm.edu/~username/.../.../admin.php
+	-- 
+
+create files, run firstrun (create db, )
+
+
+
+
+##To connect to your zoo account:
+http://www.uvm.edu/~hag/webpub/?Page=wpcheck.html&SM=wpbeginmenu.html
+
+#in linux:
+open a terminal, type ssh zoo.uvm.edu	 -l NETID, substituting your uvm netID. If you are running a recent version of Ubuntu or another distribution that uses the Gnome program 'Files' you can click the menu and type in "Connect to Server". Type "ftp://zoo.uvm.edu", you will be prompted for your netid and password. 
+
+##DB access  !!! NOT NEEDED WITH SQLITE
+https://webdb.uvm.edu/phpMyAdmin
+CREATE DATABASE IF NOT EXISTS USERNAME_nfs
+
+Send the credentials file to a uvm it guy ->
+
+<?php
+  $db_name = 'username_dbname';
+  $dbu = 'username_admin';
+  $dbp = 'password';
+?>
+
+they will tell you the file path of the 'locked down' file, 
+you will include it like this:
+
+require('/usr/local/uvm-inc/username.inc'); most likely substituting 'username.inc' for your username.
+
+
+##How to make a new 'quiz':
+unzip this folder -
+
+
+https://www.uvm.edu/htpasswd/password_manager/

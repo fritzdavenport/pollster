@@ -1,0 +1,6 @@
+<Files *>
+AuthType WebAuth
+require user cdavenp1 spintaur
+satisfy any
+order allow,deny
+</Files>
