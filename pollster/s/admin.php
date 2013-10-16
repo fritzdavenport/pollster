@@ -15,7 +15,7 @@ require_once('./m/dbFunctions.php'); //includes addQuestion, addAnswer, deleteAn
 if ($securityCheck) { //user has proper permissions
 	if ( $db = new SQLiteDatabase($dbLocation) ){//database is setup and writeable
 		if ($tableCheck){ //both tables exist and are ready to be written
-
+			if( checkQuestionsTable($db) ){echo "questions exists";}
 		} else { //one or both tables do not exist and need to be created.
 
 		}
@@ -24,10 +24,11 @@ if ($securityCheck) { //user has proper permissions
 				# code... isset($_POST['xxx'])
 				break;
 			
-			default:
+			default: //admin 'landing page'. Show the question form
 				require_once('./v/head.php'); //doctype, head, body.
 				require_once('./v/main.php'); //
-				require_once('./v/foot.php');				
+				require_once('./v/questionForm.php')
+				require_once('./v/foot.php'); //end 			
 				break;
 		}
 
