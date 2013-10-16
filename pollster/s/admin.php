@@ -10,7 +10,7 @@ $dbLocation = "../result";
 
 
 //#### global requires (model functions)
-require_once('./m/dbFunctions.php'); //includes addQuestion, addAnswer, deleteAnswer, deleteQuestion, renameAnswer, renameQuestion
+require_once('m/dbFunctions.php'); //includes addQuestion, addAnswer, deleteAnswer, deleteQuestion, renameAnswer, renameQuestion
 
 if ($securityCheck) { //user has proper permissions
 	if ( $db = new SQLiteDatabase($dbLocation) ){//database is setup and writeable
@@ -25,10 +25,10 @@ if ($securityCheck) { //user has proper permissions
 				break;
 			
 			default: //admin 'landing page'. Show the question form
-				require_once('./v/head.php'); //doctype, head, body.
-				require_once('./v/main.php'); //
-				require_once('./v/questionForm.php');
-				require_once('./v/foot.php'); //end 			
+				require_once('v/head.php'); //doctype, head, body.
+				require_once('v/main.php'); //
+				require_once('v/questionForm.php');
+				require_once('v/foot.php'); //end 			
 				break;
 		}
 
