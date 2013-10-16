@@ -27,7 +27,7 @@ if ($securityCheck) { //user has proper permissions
 			default: //admin 'landing page'. Show the question form
 				require_once('./v/head.php'); //doctype, head, body.
 				require_once('./v/main.php'); //
-				require_once('./v/questionForm.php')
+				require_once('./v/questionForm.php');
 				require_once('./v/foot.php'); //end 			
 				break;
 		}
