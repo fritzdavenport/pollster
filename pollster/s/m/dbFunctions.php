@@ -56,7 +56,7 @@ addAnswer: in: database object, question number, answer text. returns: answer nu
 		switch ($table) {
 			case 'value':
 				
-				$db -> queryExec('UPDATE Answer SET fldAnswerText="'.$newText.'" WHERE fldAnswerText="'.$oldText.'";' )
+				$db -> queryExec('UPDATE Answer SET fldAnswerText="'.$newText.'" WHERE fldAnswerText="'.$oldText.'";' );
 				break;
 
 			case 'value':
