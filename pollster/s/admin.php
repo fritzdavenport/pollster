@@ -12,7 +12,7 @@ $dbLocation = "../result";
 require_once('m/dbFunctions.php'); //includes addQuestion, addAnswer, deleteAnswer, deleteQuestion, renameAnswer, renameQuestion
 
 if ($securityCheck) { //user has proper permissions
-	if (!( $db = new SQLiteDatabase($dbLocation) )){//database is setup and writeable
+	if ( $db = new SQLiteDatabase($dbLocation) ){//database is setup and writeable
 		echo "here1";
 		if ( checkQuestionTable($db) && checkAnswerTable($db) ){ //both tables exist and are ready to be written
 
@@ -34,7 +34,7 @@ if ($securityCheck) { //user has proper permissions
 		}
 
 	} else{ //user is secure, database is not setup
-		echo "Unknown error occured: Please email <a href='mailto:cdavenp1@uvm.edu'>site administrator</a> ";
+		echo "Unknown error occured: Please email <a href=;mailto:cdavenp1@uvm.edu'>site administrator</a> ";
 		die();
 	}
 } else { //user doesn't have proper permissions
