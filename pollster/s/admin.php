@@ -12,13 +12,14 @@ $dbLocation = "../result";
 require_once('m/dbFunctions.php'); //includes addQuestion, addAnswer, deleteAnswer, deleteQuestion, renameAnswer, renameQuestion
 
 if ($securityCheck) { //user has proper permissions
-	if ( $db = new SQLiteDatabase($dbLocation) ){//database is setup and writeable
+	if (!( $db = new SQLiteDatabase($dbLocation) )){//database is setup and writeable
 		echo "here1";
-		if ( true ){ //both tables exist and are ready to be written
-			echo "here2";
-			if( checkQuestionsTable($db) ){echo "questions exists";} else { echo "questions dne";} //code
-		} else { //one or both tables do not exist and need to be created.
-			echo "here3";
+		if ( checkQuestionTable($db) && checkAnswerTable($db) ){ //both tables exist and are ready to be written
+			if () {
+
+		} else { //create tables as needed
+			if (! ( checkQuestionTable($db) ) ) createQuestionTable($db);
+			if (! ( checkAnswerTable($db) ) ) createAnswerTable($db);
 		}
 		switch ($_POST["state"]) { //show question table? add ans? 
 			case 'value':
@@ -34,7 +35,8 @@ if ($securityCheck) { //user has proper permissions
 		}
 
 	} else{ //user is secure, database is not setup
-		//setup the database. or die with an error.
+		echo "Unknown error occured: Please email <a href="mailto:cdavenp1@uvm.edu">site administrator</a> ";
+		die();
 	}
 } else { //user doesn't have proper permissions
 	//meta-redirect? Display error message and link out?
