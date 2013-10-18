@@ -12,7 +12,7 @@ $dbLocation = "../result";
 require_once('m/dbFunctions.php'); //includes addQuestion, addAnswer, deleteAnswer, deleteQuestion, renameAnswer, renameQuestion
 
 if ($securityCheck) { //user has proper permissions
-	if ($DEBUG){ echo $_POST[]; }
+	if ($DEBUG){ echo $_POST; }
 	if ( $db = new SQLiteDatabase($dbLocation) ){//database is setup and writeable
 		if (! ( checkQuestionTable($db) ) ) createQuestionTable($db); //if a table doesn't exist, add it
 		if (! ( checkAnswerTable($db) ) ) createAnswerTable($db);
