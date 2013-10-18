@@ -34,7 +34,7 @@ if ($securityCheck) { //user has proper permissions
 		}
 
 	} else{ //user is secure, database is not setup
-		echo "Unknown error occured: Please email <a href="mailto:cdavenp1@uvm.edu">site administrator</a> ";
+		echo "Unknown error occured: Please email <a href='mailto:cdavenp1@uvm.edu'>site administrator</a> ";
 		die();
 	}
 } else { //user doesn't have proper permissions
