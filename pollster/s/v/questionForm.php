@@ -3,14 +3,9 @@
 		<input type=hidden name="fldQuestionNumber" value=<? echo '"'.$qn.'"'; ?> >
 		<INPUT TYPE="text" name="fldQuestionText" placeholder="Please input question text">
 		<SELECT name="numAnswers">
-			<OPTION>2</OPTION>
-			<OPTION>3</OPTION>
-			<OPTION selected>4</OPTION>
-			<OPTION>5</OPTION>
-			<OPTION>6</OPTION>
-			<OPTION>7</OPTION>
-			<OPTION>8</OPTION>
-			<OPTION>9</OPTION>
+		<? 	for ($i=2; $i < 10; $i++) { ?> 
+			<OPTION <? if ($i == 4){ echo "selected";?> > <? echo $i ?> </OPTION>
+		<? } ?>
 		</SELECT> How many answers will it have?
 	</p>
 	<INPUT TYPE=SUBMIT VALUE="submit">

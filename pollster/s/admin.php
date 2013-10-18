@@ -1,5 +1,5 @@
 <!-- ADMIN.php - controller for pollster backend, self submits for various runstates -->
-
+<p>DISPLAY</p>
 <?php //controller init
 $securityCheck=1; //user is supposed to be here, able to modify db.
 $databaseCheck=1; //database exists or was just created and is write-able
@@ -12,16 +12,13 @@ $dbLocation = "../result";
 require_once('m/dbFunctions.php'); //includes addQuestion, addAnswer, deleteAnswer, deleteQuestion, renameAnswer, renameQuestion
 
 if ($securityCheck) { //user has proper permissions
+	if ($DEBUG){ echo $_POST[]; }
 	if ( $db = new SQLiteDatabase($dbLocation) ){//database is setup and writeable
-		echo "here1";
-		if ( checkQuestionTable($db) && checkAnswerTable($db) ){ //both tables exist and are ready to be written
-
-		} else { //create tables as needed
-			if (! ( checkQuestionTable($db) ) ) createQuestionTable($db);
-			if (! ( checkAnswerTable($db) ) ) createAnswerTable($db);
-		}
+		if (! ( checkQuestionTable($db) ) ) createQuestionTable($db); //if a table doesn't exist, add it
+		if (! ( checkAnswerTable($db) ) ) createAnswerTable($db);
+		
 		switch ($_POST["state"]) { //show question table? add ans? 
-			case 'value':
+			case 'postq':
 				# code... isset($_POST['xxx'])
 				break;
 			
