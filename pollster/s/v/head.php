@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<? if ($redirectURL) print '<meta http-equiv="REFRESH" content="0;url="'.$redirectURL.'">' ?>
+		<?php if ($redirectURL) print '<meta http-equiv="REFRESH" content="0;url="'.$redirectURL.'">'; ?>
 		<meta charset="utf-8">
 		<meta name="author" content="Fritz Davenport">
 		<meta name="description" content="<?php echo $pageDesc; ?>" >

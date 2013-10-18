@@ -10,21 +10,19 @@ addAnswer: in: database object, question number, answer text. returns: answer nu
 -->
 
 <?php
+
 	function checkQuestionTable ($db){
 		$q = @$db->query('SELECT * FROM Question'); 
 		return $q === false; 
 	}
 
 	function createQuestionTable ($db){
-		$qta = $db->queryExec('CREATE TABLE Question '.'(fldQuestionNumber INTEGER PRIMARY KEY, 
-																fldRefIn TEXT,
-																fldRedirect TEXT,
-																fldQuestionText TEXT NOT NULL)');
-		if ($DEBUG && $qta){
-			echo "table Question hadn't been made, but I got it.</br>";
-		} else {
-			if ($DEBUG){echo "Something went wrong with Question table creation";}
+		$qta = $db->exec('CREATE TABLE Question '.'(fldQuestionNumber INTEGER PRIMARY KEY, 
+														fldQuestionText TEXT NOT NULL);');
+		if ($qta){ debug("table Question hadn't been made, but I got it.</br>");
+		} else { debug("Something went wrong with Question table creation"); 
 		}
+		
 	}
 
 	function checkAnswerTable ($db){
@@ -32,31 +30,47 @@ addAnswer: in: database object, question number, answer text. returns: answer nu
 		return $p === false; 
 	}
 
-	function createAnswerTable($db){
-		$cta = $db->queryExec('CREATE TABLE Answer '.'(fldAnswerNumber PRIMARY KEY, 
+	function createAnswerTable($db){ //ans AnsNumber, QNumber, AnsText, TimesPicked
+		$cta = $db->exec('CREATE TABLE Answer '.'(	fldAnswerNumber INTEGER,
+													fldQuestionNumber INTEGER,
 													fldAnswerText TEXT NOT NULL, 
 													fldTimesPicked INTEGER DEFAULT 0,
-													FOREIGN KEY (fldQuestionNumber) REFERENCES Question(fldQuestionNumber) )');
-		if ($DEBUG && $cta){
-			echo "table Answer hadn't been made, but I got it.</br>";
-		} else {
-			if ($DEBUG){echo "Something went wrong with Answer table creation";}
+													FOREIGN KEY (fldQuestionNumber) REFERENCES Question(fldQuestionNumber) ON DELETE CASCADE, 
+													PRIMARY KEY(fldQuestionNumber, fldAnswerNumber) );');
+		if ($cta){ debug("table Answer hadn't been made, but I got it.</br>");
+		} else { debug("Something went wrong with Answer table creation"); 
 		}
 	}
 
 	function addAnswer($db, $questionNumber, $answerText){
-		$db->queryExec('INSERT into Answer VALUES (null,$answerText,0,$questionNumber)');
+		$db->exec('INSERT into Answer VALUES (null,"'.$questionNumber.'","'.$answerText.'",0)');
+	}
+
+//ans fldAnswerNumber, fldQuestionNumber, fldAnswerText, fldTimesPicked   
+//ques fldQuestionNumber, fldQuestionText, fldRefIn, fldRedirect
+
+	function addQuestion($db, $qtext){//ques fldQuestionNumber, fldQuestionText, fldRefIn, fldRedirect
+		$db->exec('INSERT into Question VALUES (null, "'.$qtext.'");'); 
+		$result = $db -> query("SELECT last_insert_rowid() FROM Question");
+		$rArr = $result -> fetchArray();
+		debug("INSERT ID: ".$rArr[0]);
+		return $rArr[0];
 	}
 
 	function deleteQuestion($db, $qn){ #delete a question, also follow and delete answers. 
 
 	}
 
+	function deleteTables($db){ #delete a question, also follow and delete answers. 
+		$db->exec('DROP TABLE Question;');
+		$db->exec('DROP TABLE Answer;');
+	}
+
 	function renameItem($db, $table, $oldText, $newText){ //update old name to new name. Can be question or ans
 		switch ($table) {
 			case 'value':
 				
-				$db -> queryExec('UPDATE Answer SET fldAnswerText="'.$newText.'" WHERE fldAnswerText="'.$oldText.'";' );
+				$db -> exec('UPDATE Answer SET fldAnswerText="'.$newText.'" WHERE fldAnswerText="'.$oldText.'";' );
 				break;
 
 			case 'value':
@@ -68,9 +82,3 @@ addAnswer: in: database object, question number, answer text. returns: answer nu
 				break;
 		}
 	}
-
-	function addQuestion($db, $qtext, $refIn=null, $redirect=null){
-		$db->queryExec('INSERT into Question VALUES (null,$refIn,$redirect,$qtext)'); 
-	}
-			//} else { die($err); } // /if db	}
-			//select last_insert_rowid();
