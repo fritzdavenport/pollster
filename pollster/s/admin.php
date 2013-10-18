@@ -3,7 +3,6 @@
 <?php //controller init
 $securityCheck=1; //user is supposed to be here, able to modify db.
 $databaseCheck=1; //database exists or was just created and is write-able
-$tablesCheck=1;
 $DEBUG=true;
 $uname=$_SERVER["REMOTE_USER"]; 
 $dbLocation = "../result";
@@ -15,7 +14,7 @@ require_once('m/dbFunctions.php'); //includes addQuestion, addAnswer, deleteAnsw
 if ($securityCheck) { //user has proper permissions
 	if ( $db = new SQLiteDatabase($dbLocation) ){//database is setup and writeable
 		echo "here1";
-		if ($tableCheck){ //both tables exist and are ready to be written
+		if ( true ){ //both tables exist and are ready to be written
 			echo "here2";
 			if( checkQuestionsTable($db) ){echo "questions exists";} else { echo "questions dne";} //code
 		} else { //one or both tables do not exist and need to be created.
