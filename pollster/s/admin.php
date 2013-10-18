@@ -14,10 +14,12 @@ require_once('m/dbFunctions.php'); //includes addQuestion, addAnswer, deleteAnsw
 
 if ($securityCheck) { //user has proper permissions
 	if ( $db = new SQLiteDatabase($dbLocation) ){//database is setup and writeable
+		echo "here1";
 		if ($tableCheck){ //both tables exist and are ready to be written
+			echo "here2";
 			if( checkQuestionsTable($db) ){echo "questions exists";} else { echo "questions dne";} //code
 		} else { //one or both tables do not exist and need to be created.
-
+			echo "here3";
 		}
 		switch ($_POST["state"]) { //show question table? add ans? 
 			case 'value':
