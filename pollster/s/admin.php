@@ -15,7 +15,6 @@ if ($securityCheck) { //user has proper permissions
 	if (!( $db = new SQLiteDatabase($dbLocation) )){//database is setup and writeable
 		echo "here1";
 		if ( checkQuestionTable($db) && checkAnswerTable($db) ){ //both tables exist and are ready to be written
-			if () {
 
 		} else { //create tables as needed
 			if (! ( checkQuestionTable($db) ) ) createQuestionTable($db);

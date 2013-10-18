@@ -10,7 +10,7 @@ addAnswer: in: database object, question number, answer text. returns: answer nu
 -->
 
 <?php
-	function checkQuestionsTable ($db){
+	function checkQuestionTable ($db){
 		$q = @$db->query('SELECT * FROM Question'); 
 		return $q === false; 
 	}
