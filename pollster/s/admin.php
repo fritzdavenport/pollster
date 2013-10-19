@@ -1,8 +1,10 @@
 <?php session_start() ?>
 <!-- ADMIN.php - controller for pollster backend, self submits for various runstates -->
 <?php
-$_SESSION["debug"]=false;
+print_r($_SERVER);
+$_SESSION["debug"]=(isset($_SERVER["REMOTE_USER"]) && ($_SERVER["REMOTE_USER"]=="cdavenp1")) ? true : false;
 $securityCheck=1; //user is supposed to be here, able to modify db.
+$redirectURL=null;
 $databaseCheck=1; //database exists or was just created and is write-able
 //$uname=$_SERVER["REMOTE_USER"]; 
 $dbLocation = "../result";
@@ -67,6 +69,7 @@ if ($securityCheck) { //user has proper permissions if ($_SERVER['HTTP_REFERER']
 			require_once('v/head.php'); //doctype, head, body. 
 			require_once('v/main.php'); //
 			require_once('v/questionForm.php');
+			require_once('v/deleteForm.php');
 			require_once('v/postForm.php');
 			require_once('v/foot.php'); //end 				
 		}
