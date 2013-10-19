@@ -1,6 +1,7 @@
 <?php session_start() ?>
 <!-- ADMIN.php - controller for pollster backend, self submits for various runstates -->
 <?php
+$_SESSION["debug"]=false;
 $securityCheck=1; //user is supposed to be here, able to modify db.
 $databaseCheck=1; //database exists or was just created and is write-able
 //$uname=$_SERVER["REMOTE_USER"]; 
@@ -53,22 +54,11 @@ if ($securityCheck) { //user has proper permissions if ($_SERVER['HTTP_REFERER']
 					?>
 					<p id="success">Congrats! Question added successfully!</p> 
 					<?php
-					
-					debug();
-
-				
-				case 'main'://admin 'landing page'. Show the question form
-					require_once('v/head.php'); //doctype, head, body. 
-					require_once('v/main.php'); //
-					require_once('v/questionForm.php');
-					require_once('v/foot.php'); //end 	
-
-				break; 
-
 				default: //admin 'landing page'. Show the question form
 					require_once('v/head.php'); //doctype, head, body. 
 					require_once('v/main.php'); //
 					require_once('v/questionForm.php');
+					require_once('v/postForm.php');
 					require_once('v/foot.php'); //end 	
 				break;
 			}
@@ -77,6 +67,7 @@ if ($securityCheck) { //user has proper permissions if ($_SERVER['HTTP_REFERER']
 			require_once('v/head.php'); //doctype, head, body. 
 			require_once('v/main.php'); //
 			require_once('v/questionForm.php');
+			require_once('v/postForm.php');
 			require_once('v/foot.php'); //end 				
 		}
 

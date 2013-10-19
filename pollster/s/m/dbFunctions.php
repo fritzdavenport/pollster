@@ -21,9 +21,23 @@ addAnswer: in: database object, question number, answer text. returns: answer nu
 														fldQuestionText TEXT NOT NULL);');
 		if ($qta){ debug("table Question hadn't been made, but I got it.</br>");
 		} else { debug("Something went wrong with Question table creation"); 
-		}
-		
+		}	
 	}
+
+
+	function addQuestion($db, $qtext){//ques fldQuestionNumber, fldQuestionText, fldRefIn, fldRedirect
+		$db->exec('INSERT into Question VALUES (null, "'.$qtext.'");'); 
+		$result = $db -> query("SELECT last_insert_rowid() FROM Question");
+		$rArr = $result -> fetchArray();
+		debug("INSERT ID: ".$rArr[0]);
+		return $rArr[0];
+	}
+
+
+	function getQuestion($db, $questionNumber){
+		//$db->query('')
+	}
+	
 
 	function checkAnswerTable ($db){
 		$p = @$db->query('SELECT * FROM Answer'); //test if number is within range
@@ -48,14 +62,6 @@ addAnswer: in: database object, question number, answer text. returns: answer nu
 
 //ans fldAnswerNumber, fldQuestionNumber, fldAnswerText, fldTimesPicked   
 //ques fldQuestionNumber, fldQuestionText, fldRefIn, fldRedirect
-
-	function addQuestion($db, $qtext){//ques fldQuestionNumber, fldQuestionText, fldRefIn, fldRedirect
-		$db->exec('INSERT into Question VALUES (null, "'.$qtext.'");'); 
-		$result = $db -> query("SELECT last_insert_rowid() FROM Question");
-		$rArr = $result -> fetchArray();
-		debug("INSERT ID: ".$rArr[0]);
-		return $rArr[0];
-	}
 
 	function deleteQuestion($db, $qn){ #delete a question, also follow and delete answers. 
 
