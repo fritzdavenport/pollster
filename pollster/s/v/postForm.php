@@ -18,14 +18,5 @@
 		}
 
 	}
-	echo "out";
-	// foreach ($qArr as $key => $value) {
-	// 	debug($key);
-	// 	debug($value);
-	// }
-	echo "<tr><td>";
-
-	echo "</td></tr>";
-
 ?>
 </table>
