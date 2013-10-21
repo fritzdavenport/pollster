@@ -1,5 +1,6 @@
 <form action= <?php echo '"'.$_SERVER['PHP_SELF'].'"'; ?> method="post">
 	<?php if ( $_POST['numAnswers'] && $_POST['fldQuestionText'] ){ //if it has a number of answers and a question number to give the answers to
+			echo "<p>Question Text: ".$_POST['fldQuestionText']."</p>";
 			for($i=0; $i<$_POST['numAnswers']; $i++){ 
 				$humanReadable = $i + 1;
 				echo "Answer ";

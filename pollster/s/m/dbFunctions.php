@@ -45,12 +45,11 @@ addAnswer: in: database object, question number, answer text. returns: answer nu
 	}
 
 	function createAnswerTable($db){ //ans AnsNumber, QNumber, AnsText, TimesPicked
-		$cta = $db->exec('CREATE TABLE Answer '.'(	fldAnswerNumber INTEGER,
+		$cta = $db->exec('CREATE TABLE Answer '.'(	fldAnswerNumber INTEGER PRIMARY KEY,
 													fldQuestionNumber INTEGER,
 													fldAnswerText TEXT NOT NULL, 
 													fldTimesPicked INTEGER DEFAULT 0,
-													FOREIGN KEY (fldQuestionNumber) REFERENCES Question(fldQuestionNumber) ON DELETE CASCADE, 
-													PRIMARY KEY(fldQuestionNumber, fldAnswerNumber) );');
+													FOREIGN KEY (fldQuestionNumber) REFERENCES Question(fldQuestionNumber) ON DELETE CASCADE );');
 		if ($cta){ debug("table Answer hadn't been made, but I got it.</br>");
 		} else { debug("Something went wrong with Answer table creation"); 
 		}
@@ -88,3 +87,4 @@ addAnswer: in: database object, question number, answer text. returns: answer nu
 				break;
 		}
 	}
+?>

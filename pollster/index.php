@@ -1,23 +1,33 @@
-<? ?>
+<?php session_start() ?>
 <!--main.php -->
-<html>
-	<head>
-		<?
-			//TODO: php form via text config file, put TEXT into DB if not already
-			//jquery load(results)
+<?php
+	$_SESSION["debug"]=( $_SERVER["HTTP_HOST"]=="localhost")? true : false;
+	$pageDesc = "This is the Pollster web app, used for live survey results."; //required for head.php view
+	$dbLocation = "result";
+	$redirectURL=null; //Change this to mess with the post page?
+	require_once('m/miscFunctions.php'); //includes debug
 
-		?>
-	</head>
-	<body>
-		<form action="./formprocess.php" method="get">
-			<p>
-				<INPUT TYPE=hidden name="fQN" VALUE="1">
-				<INPUT TYPE=RADIO NAME="fAN" VALUE="0">tiny<BR>
-				<INPUT TYPE=RADIO NAME="fAN" VALUE="1">small<BR>
-				<INPUT TYPE=RADIO NAME="fAN" VALUE="2" checked>medium<BR>
-				<INPUT TYPE=RADIO NAME="fAN" VALUE="3">large
-			</p>
-			<INPUT TYPE=SUBMIT VALUE="submit">
-		</form>
-	</body>
-</html>
+	//#### global requires (model functions)
+	require_once('m/dbFunctionsLite.php'); //includes includes checks and getters
+	if (isset($_POST) ) debug($_POST);
+
+	//cookie check, send to post
+
+	if ( $db = new SQLite3($dbLocation) ){
+		if (checkQuestionTable($db) && checkQuestionTable($db) ) die("There was an error on the page, please contact the site administrator.");
+		//goes from here to post.php on a successful click
+		$questionNumber = (isset($_GET['qn'])) ? $_GET['qn']:1;
+		$questionText=getQuestion($db, $questionNumber);
+		require_once('v/mainQuestion.php'); //requires $questionText, answer $arrayName = array('' => , );
+
+		if (null!==$_POST("fldQuestionNumber")) { //if there is a submitted question
+			if (null!==$_POST("fldAnswerNumber") ){//with a submitted answer
+				addAnswerCount($db, $fldQuestionNumber,	$fldAnswerNumber);
+			}
+		}
+
+		if (null!==$_POST("s") ){ //if submitted? Show post?
+
+		}
+	}
+?>
