@@ -5,7 +5,7 @@
 		<h1><?php echo $questionText ?></h1>
 		<form action=<?php echo "'".$_SERVER['PHP_SELF']."'"; ?> method="post">
 			<?php 
-				$a = @$db->query('SELECT * FROM Answer WHERE fldQuestionNumber=1;'); //"'.$questionNumber.'"
+				$a = @$db->query('SELECT * FROM Answer WHERE fldQuestionNumber='.$questionNumber.';'); //"'.$questionNumber.'"
 
 				echo "<input type=hidden name='fldQuestionNumber' value='".$questionNumber."'>";
 				while( $aArr = $a->fetchArray() ){

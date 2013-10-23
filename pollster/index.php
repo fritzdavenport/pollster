@@ -15,19 +15,22 @@
 
 	if ( $db = new SQLite3($dbLocation) ){
 		if (checkQuestionTable($db) && checkQuestionTable($db) ) die("There was an error on the page, please contact the site administrator.");
-		//goes from here to post.php on a successful click
+		$redirect=null;
 		$questionNumber = (isset($_GET['qn'])) ? $_GET['qn']:1;
 		$questionText=getQuestion($db, $questionNumber);
 		require_once('v/mainQuestion.php'); //requires $questionText, answer $arrayName = array('' => , );
 
-		if (null!==$_POST("fldQuestionNumber")) { //if there is a submitted question
-			if (null!==$_POST("fldAnswerNumber") ){//with a submitted answer
-				addAnswerCount($db, $fldQuestionNumber,	$fldAnswerNumber);
+		if (isset($_POST['fldQuestionNumber'])) { //if there is a submitted question
+			if (isset($_POST['fldAnswerNumber'])) {//with a submitted answer
+				addAnswerCount($db, $_POST['fldQuestionNumber'], $_POST['fldAnswerNumber']);
 			}
 		}
+		
+		// if (isset($_GET['s'])) {
+  //   		echo "This var is set so I will print.";
+		// }
 
-		if (null!==$_POST("s") ){ //if submitted? Show post?
+		require_once('v/post.php'); //requires $questionText, answer $arrayName = array('' => , );
 
-		}
 	}
 ?>

@@ -2,24 +2,25 @@
 
 <table>
 <?php 
-	$q = @$db->query('SELECT * FROM Question'); 
+	$q = getQuestions($db); 
 	while ( $qArr = $q->fetchArray() ){
-		$a = @$db->query(' SELECT * FROM Answer WHERE fldQuestionNumber='.$qArr["fldQuestionNumber"].';'); 
+		$a = getAnswers($db, $qArr["fldQuestionNumber"]); 
 		echo "<tr><td>Question ".
 					$qArr["fldQuestionNumber"]
 				.":</td><td>".
 					$qArr["fldQuestionText"]
 				."</td></tr>";
+				// link to question
+				//link to referer
 		while ( $aArr = $a->fetchArray() ){
 			echo "<tr><td></td><td class='answer'>Answer ".
 					$aArr["fldAnswerNumber"]
 				.":</td><td>".
 					$aArr["fldAnswerText"]
 				."</td><td class='picked'>Times Picked: ".
-					$aArr["fldTimesPicked"]
+					$aArr["fldTimesPicked"]  
 				."</td></tr>";
 		}
-
 	}
 ?>
 </table>

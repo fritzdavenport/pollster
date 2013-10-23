@@ -18,7 +18,8 @@ addAnswer: in: database object, question number, answer text. returns: answer nu
 
 	function createQuestionTable ($db){
 		$qta = $db->exec('CREATE TABLE Question '.'(fldQuestionNumber INTEGER PRIMARY KEY, 
-														fldQuestionText TEXT NOT NULL);');
+														fldQuestionText TEXT NOT NULL,
+														fldRedirect);');
 		if ($qta){ debug("table Question hadn't been made, but I got it.</br>");
 		} else { debug("Something went wrong with Question table creation"); 
 		}	
@@ -34,10 +35,15 @@ addAnswer: in: database object, question number, answer text. returns: answer nu
 	}
 
 
-	function getQuestion($db, $questionNumber){
-		//$db->query('')
+	function getQuestions($db, $questionNumber='*'){ //defaults to return all question, one if specified.
+		 $qs = @$db->query('SELECT '.$questionNumber.' FROM Question');
+		 return $qs;
 	}
 	
+	function getAnswers($db, $questionNumber, $answerNumber="*"){
+		$as = @$db->query(' SELECT '.$answerNumber.' FROM Answer WHERE fldQuestionNumber='.$questionNumber.';');
+		return $as;
+	}
 
 	function checkAnswerTable ($db){
 		$p = @$db->query('SELECT * FROM Answer'); //test if number is within range
@@ -62,8 +68,8 @@ addAnswer: in: database object, question number, answer text. returns: answer nu
 //ans fldAnswerNumber, fldQuestionNumber, fldAnswerText, fldTimesPicked   
 //ques fldQuestionNumber, fldQuestionText, fldRefIn, fldRedirect
 
-	function deleteQuestion($db, $qn){ #delete a question, also follow and delete answers. 
-
+	function deleteQuestion($db, $questionNumber){ #delete a question, also follow and delete answers. 
+		$db->exec('DELETE FROM Answer WHERE fldQuestionNumber='.$questionNumber.' AND fldAnswerNumber='.$ans.';');
 	}
 
 	function deleteTables($db){ #delete a question, also follow and delete answers. 

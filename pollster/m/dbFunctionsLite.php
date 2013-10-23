@@ -10,21 +10,26 @@ addAnswer: in: database object, question number, answer text. returns: answer nu
 -->
 
 <?php
-	function getQuestion($db, $questionNumber){
-		$q = $db->query('SELECT fldQuestionText FROM Question WHERE fldQuestionNumber=1;');
+	function getQuestion($db, $questionNumber){ //gets question text of supplied question number
+		$q = $db->query('SELECT fldQuestionText FROM Question WHERE fldQuestionNumber="'.$questionNumber.'";');
 		$questionText = $q -> fetchArray();
-		//gets question text of supplied question number
 		return $questionText["fldQuestionText"];
 	}
 
+	function getRedirect($db, $questionNumber){
+		$r = $db->query('SELECT fldQuestionText FROM Question WHERE fldQuestionNumber="'.$questionNumber.'";');
+		$redirect = $r -> fetchArray();\
+		return $redirect["fldRedirect"];
+	}
+
 	function addAnswerCount($db, $fldQuestionNumber, $fldAnswerNumber){
-		$aa = $db->exec('UPDATE Answer SET TimesPicked = TimesPicked + 1 WHERE AnswerNumber="'.$fldAnswerNumber.'" AND fldQuestionNumber="'.$fldQuestionNumber.'";');
+		$aa = $db->exec('UPDATE Answer SET fldTimesPicked = fldTimesPicked + 1 WHERE fldAnswerNumber="'.$fldAnswerNumber.'" AND fldQuestionNumber="'.$fldQuestionNumber.'";');
 	}
 
 	function getAnswerArray($db, $questionNumber){
-		//$db->query('')
-		//gets all answers of supplied question, returns array("Text":"AnswerNumber","Text":"AnswerNumber")
-		return $answerArray;
+		$a = $db->query('SELECT "fldAnswerText", "fldTimesPicked" FROM Answer WHERE fldQuestionNumber="'.$questionNumber.'";');
+		while ($temp = $a -> fetchArray() ) $answers[]= $temp;
+		return $answers;
 	}
 
 	function checkAnswerTable ($db){
