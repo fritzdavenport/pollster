@@ -9,9 +9,11 @@
 					$qArr["fldQuestionNumber"]
 				.":</td><td>".
 					$qArr["fldQuestionText"]
+				."</td>"."<td>".
+					$rootLoc."index.php?qn=".$qArr["fldQuestionNumber"]
 				."</td></tr>";
 				// link to question
-				//link to referer
+				//link to redirect
 		while ( $aArr = $a->fetchArray() ){
 			echo "<tr><td></td><td class='answer'>Answer ".
 					$aArr["fldAnswerNumber"]

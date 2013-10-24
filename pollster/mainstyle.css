@@ -15,9 +15,16 @@ footer, header, hgroup, menu, nav, section { display: block;}
 	src: url('http://www.uvm.edu/~cdavenp1/fonts/Bariol.otf');}
 /********** /cust fonts *******/
 
+body {
+	background-color: #b6d9e0;
+}
 
 header{	text-shadow: 1px 1px 3px #555;}
-header.h1 {font-size: 150%;}
+header h1 {
+	text-align: center;
+	font: 40px "Georgia", serif;
+	font-family: Bariol; 
+	/*font-size: 150%;*/}
 
 .button { 	/* generic properties of each button */
 	padding: 5%; margin: 5%;

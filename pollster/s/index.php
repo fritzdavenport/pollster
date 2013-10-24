@@ -6,6 +6,8 @@ $_SESSION["debug"]=( (isset($_SERVER["REMOTE_USER"]) && ($_SERVER["REMOTE_USER"]
 $securityCheck=1; //user is supposed to be here, able to modify db.
 $redirectURL=null;
 $databaseCheck=1; //database exists or was just created and is write-able
+$rootLoc = ((@$_SERVER["HTTPS"])?'https://':'http://').$_SERVER['SERVER_NAME'].@reset(explode('/',$_SERVER['PHP_SELF']));
+$currLoc = ((@$_SERVER["HTTPS"])?'https://':'http://').$_SERVER['SERVER_NAME'].$_SERVER["PHP_SELF"]; 
 $dbLocation = "../result";
 $pageDesc = "This is the admin control panel for the Pollster web app"; //required for head.php view
 require_once('m/miscFunctions.php'); //includes debug
