@@ -23,4 +23,4 @@
             echo "Headers were already sent in $file on line $line...";
         }
     }
-?> 
+?>
