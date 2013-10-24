@@ -1,15 +1,14 @@
-<!-- dbFunctions.php includes 
-checkQuestionsTable in: database object, returns: T/F if table exists
-createQuestionsTable in: database object, returns: none. status msg on debug. 
-addQuestion: in: database object, question text. returns: question number.
-
-
-checkAnswerTable in: database object, returns: T/F if table exists
-createAnswerTable in: database object, returns: none. status msg on debug. 
-addAnswer: in: database object, question number, answer text. returns: answer number.
--->
-
 <?php
+// dbFunctions.php includes 
+// checkQuestionsTable in: database object, returns: T/F if table exists
+// createQuestionsTable in: database object, returns: none. status msg on debug. 
+// addQuestion: in: database object, question text. returns: question number.
+
+
+// checkAnswerTable in: database object, returns: T/F if table exists
+// createAnswerTable in: database object, returns: none. status msg on debug. 
+// addAnswer: in: database object, question number, answer text. returns: answer number.
+
 	function getQuestion($db, $questionNumber){ //gets question text of supplied question number
 		$q = $db->query('SELECT fldQuestionText FROM Question WHERE fldQuestionNumber="'.$questionNumber.'";');
 		$questionText = $q -> fetchArray();
