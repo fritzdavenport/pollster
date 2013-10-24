@@ -15,7 +15,7 @@
 		if (checkQuestionTable($db) && checkAnswerTable($db) ) die("There was an error on the page, please contact the site administrator.");
 		if ( isset($_POST["fldQuestionNumber"]) && isset( $_POST["fldAnswerNumber"]) ){ //if a Question and Answer were POSTed we are trying to submit
 			$refURL=explode("?", $_SERVER["HTTP_REFERER"] );
-			if ( $refURL[0]==$currURL) { //and if they were sent from this server
+			if ( $refURL[0]==$currLoc) { //and if they were sent from this server
 				$_SESSION["alreadyAnswered"][ $_POST["fldQuestionNumber"] ]=1; //make an array of QN's answered, make a function to check if dne or not in array
 				addAnswerCount($db, $_POST['fldQuestionNumber'], $_POST['fldAnswerNumber']);
    				header( 'Location: '.$selfURL."?qn=".$_POST['fldQuestionNumber']."&sh=1" ); //once the answer is submitted, redirect to the show page.
