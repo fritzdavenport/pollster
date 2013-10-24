@@ -2,9 +2,9 @@
 	$_SESSION["debug"]=( $_SERVER["HTTP_HOST"]=="localhost")? true : false;
 	// $_SESSION["debug"]=false;
 	$pageDesc = "This is the Pollster web app, used for live survey results."; //required for head.php view
-	$hardLoc = getcwd(); // /fs/aa/.../pollster
-	$rootLoc = ((@$_SERVER["HTTPS"])?'https://':'http://').$_SERVER['SERVER_NAME'].dirname($_SERVER['SCRIPT_NAME']); // http(s)://uvm.edu/~netid/.../pollster/
-	$currLoc = ((@$_SERVER["HTTPS"])?'https://':'http://').$_SERVER['SERVER_NAME'].$_SERVER["PHP_SELF"]; 
+	$hardLoc = getcwd(); // /fs/aa/.../pollster //((@$_SERVER["HTTPS"])?'https://':'http://')
+	$rootLoc = "//".$_SERVER['SERVER_NAME'].dirname($_SERVER['SCRIPT_NAME']); // http(s)://uvm.edu/~netid/.../pollster/
+	$currLoc = "//".$_SERVER['SERVER_NAME'].$_SERVER["PHP_SELF"]; 
 	$dbLocation = "result";
 //#### global requires (model functions)
 	require_once('m/dbFunctionsLite.php'); //includes includes checks and getters
