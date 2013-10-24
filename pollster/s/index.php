@@ -25,21 +25,21 @@ if ($securityCheck){ //user has proper permissions if ($_SERVER['HTTP_REFERER']=
 			switch ($_POST["s"]) { //s for state
 				case 'ans': //state is ans. TAKES QUESTION (submitted from main), adds to db, asks answers, sends to sub
 					$qn = addQuestion($db, $_POST["fldQuestionText"] );
-					require_once('v/head.php'); //doctype, head, body. requires $pageDesc
+					require_once('../v/head.php'); //doctype, head, body. requires $pageDesc
 					require_once('v/main.php'); //
 					//ins question + form
 					require_once('v/answerForm.php'); //end 	
-					require_once('v/foot.php'); //end 	
+					require_once('../v/foot.php'); //end 	
 				break;
 
 				case 'del': //TODO: JQUERIFY THIS TO VERIFY SUBMIT
-					require_once('v/head.php'); //doctype, head, body. 
+					require_once('../v/head.php'); //doctype, head, body. 
 					require_once('v/main.php'); //
 					deleteTables($db); ?>
 					<p id="delete">Tables have been deleted successfully.</p> 
 					<?php
 					require_once('v/questionForm.php');
-					require_once('v/foot.php'); //end 	
+					require_once('../v/foot.php'); //end 	
 				break;
 
 				case 'sub': //state is sub -> submits answers and goes back to default runstate.
@@ -52,21 +52,21 @@ if ($securityCheck){ //user has proper permissions if ($_SERVER['HTTP_REFERER']=
 					<p id="success">Congrats! Question added successfully.</p> 
 					<?php
 				default: //admin 'landing page'. Show the question form
-					require_once('v/head.php'); //doctype, head, body. 
+					require_once('../v/head.php'); //doctype, head, body. 
 					require_once('v/main.php'); //
 					require_once('v/questionForm.php');
 					require_once('v/postForm.php');
-					require_once('v/foot.php'); //end 	
+					require_once('../v/foot.php'); //end 	
 				break;
 			}
 		} else {//admin 'landing page'. Show the question form
 			$pageDesc = "This is the admin control panel for the Pollster web app";
-			require_once('v/head.php'); //doctype, head, body. 
+			require_once('../v/head.php'); //doctype, head, body. 
 			require_once('v/main.php'); //
 			require_once('v/questionForm.php');
 			require_once('v/deleteForm.php');
 			require_once('v/postForm.php');
-			require_once('v/foot.php'); //end 				
+			require_once('../v/foot.php'); //end 				
 		}
 
 	} else{ //user is secure, database is not setup

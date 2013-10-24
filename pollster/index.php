@@ -11,16 +11,11 @@
 		if (checkQuestionTable($db) && checkAnswerTable($db) ) die("There was an error on the page, please contact the site administrator.");
 		if ( isset($_POST["fldQuestionNumber"]) && isset( $_POST["fldAnswerNumber"]) ){ //if a Question and Answer were POSTed we are trying to submit
 			$refURL=explode("?", $_SERVER["HTTP_REFERER"] );
-			//(($_SERVER["HTTPS"])?'https://':'http://').
-			$selfURL= ((@$_SERVER["HTTPS"])?'https://':'http://').$_SERVER['SERVER_NAME'].$_SERVER["PHP_SELF"];  //FUTURE: /~bug/ = //uvm.edu/~bug
-			debug($selfURL);
-			debug($refURL[0]);
-			debug($_POST);
-			
+			$selfURL= ((@$_SERVER["HTTPS"])?'https://':'http://').$_SERVER['SERVER_NAME'].$_SERVER["PHP_SELF"]; 
 			if ( $refURL[0]==$selfURL) { //and if they were sent from this server
 				$_SESSION["alreadyAnswered"][ $_POST["fldQuestionNumber"] ]=1; //make an array of QN's answered, make a function to check if dne or not in array
 				addAnswerCount($db, $_POST['fldQuestionNumber'], $_POST['fldAnswerNumber']);
-   				header( 'Location: '.$selfURL."?qn=".$_POST['fldQuestionNumber']."&sh=1" ) ;
+   				header( 'Location: '.$selfURL."?qn=".$_POST['fldQuestionNumber']."&sh=1" ); //once the answer is submitted, redirect to the show page.
 			} //if referrer
 		} //if post QN
 
@@ -28,15 +23,19 @@
 			debug($_GET);
 			$questionNumber = $_GET["qn"];
 			$questionText=getQuestion($db, $questionNumber);
+			require_once("v/head.php");
 			require_once("v/questionHeader.php"); // view of the Question Title. requires $questionText
 			if ( isset($_GET["sh"]) ) {
-				require_once("v/post.php");
+				require_once("v/showAnswer.php"); //view to show the answers.
 			} else {
-				require_once("v/mainQuestion.php"); //view to ask question. 
+				require_once("v/askQuestion.php"); //view to ask question. 
 			}
-			
+			require_once("v/foot.php");
 		}//if get QN
 		else {
-			echo "there isn't a QN set";
+			$questionText="Pollster version 1.05";
+			require_once("v/head.php");
+			require_once("v/questionHeader.php"); // view of the Question Title. requires $questionText
+			require_once("v/foot.php");
 		}
 	} //if db
