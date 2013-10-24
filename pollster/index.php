@@ -2,9 +2,10 @@
 	$_SESSION["debug"]=( $_SERVER["HTTP_HOST"]=="localhost")? true : false;
 	// $_SESSION["debug"]=false;
 	$pageDesc = "This is the Pollster web app, used for live survey results."; //required for head.php view
-	$hardLoc = getcwd(); // /fs/aa/.../pollster //((@$_SERVER["HTTPS"])?'https://':'http://')
-	$rootLoc = "//".$_SERVER['SERVER_NAME'].dirname($_SERVER['SCRIPT_NAME']); // http(s)://uvm.edu/~netid/.../pollster/
-	$currLoc = "//".$_SERVER['SERVER_NAME'].$_SERVER["PHP_SELF"]; 
+	$hardLoc = getcwd(); // /fs/aa/.../pollster 
+	$rootLoc = "//".$_SERVER['SERVER_NAME'].dirname($_SERVER['SCRIPT_NAME']); // //uvm.edu/~netid/.../pollster/
+	$currLoc = "//".$_SERVER['SERVER_NAME'].$_SERVER["PHP_SELF"]; //uvm.edu/~netid/.../pollster/.../   ---> for scripts
+	$httpCurrLoc = ((@$_SERVER["HTTPS"])?'https://':'http://').$_SERVER['SERVER_NAME'].$_SERVER["PHP_SELF"];  // http://uvm.edu/~netid/.../pollster/.../ --> for redirects
 	$dbLocation = "result";
 //#### global requires (model functions)
 	require_once('m/dbFunctionsLite.php'); //includes includes checks and getters
@@ -15,10 +16,10 @@
 		if (checkQuestionTable($db) && checkAnswerTable($db) ) die("There was an error on the page, please contact the site administrator.");
 		if ( isset($_POST["fldQuestionNumber"]) && isset( $_POST["fldAnswerNumber"]) ){ //if a Question and Answer were POSTed we are trying to submit
 			$refURL=explode("?", $_SERVER["HTTP_REFERER"] );
-			if ( $refURL[0]==$currLoc) { //and if they were sent from this server
+			if ( $refURL[0]==$httpCurrLoc) { //and if they were sent from this server
 				$_SESSION["alreadyAnswered"][ $_POST["fldQuestionNumber"] ]=1; //make an array of QN's answered, make a function to check if dne or not in array
 				addAnswerCount($db, $_POST['fldQuestionNumber'], $_POST['fldAnswerNumber']);
-   				header( 'Location: '.$selfURL."?qn=".$_POST['fldQuestionNumber']."&sh=1" ); //once the answer is submitted, redirect to the show page.
+   				header( 'Location: '.$httpCurrLoc."?qn=".$_POST['fldQuestionNumber']."&sh=1" ); //once the answer is submitted, redirect to the show page.
 			} //if referrer
 		} //if post QN
 
