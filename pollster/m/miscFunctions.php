@@ -10,10 +10,17 @@
                 print_r($value); 
                 print"</pre>\n"; 
             }elseif(is_object($value)){ 
-                $value.dump(); 
+                var_dump($value); 
             }else{ 
                 print("<p>&gt;${value}&lt;</p>"); 
             } 
         }
-    } 
+    }
+
+    function chkHeaders(){
+        if(headers_sent($file, $line)){
+            // ... where were the mysterious headers sent from?
+            echo "Headers were already sent in $file on line $line...";
+        }
+    }
 ?> 

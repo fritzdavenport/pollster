@@ -1,12 +1,7 @@
-		<!-- TODO: check cookie, 
-		check post to get question number, 
-		check referrer for question number 
-		A doesn't have ans numbers-->
-		<h1><?php echo $questionText ?></h1>
+		<!-- Main view to ask question -->
 		<form action=<?php echo "'".$_SERVER['PHP_SELF']."'"; ?> method="post">
 			<?php 
-				$a = @$db->query('SELECT * FROM Answer WHERE fldQuestionNumber='.$questionNumber.';'); //"'.$questionNumber.'"
-
+				$a = @$db->query('SELECT * FROM Answer WHERE fldQuestionNumber="'.$questionNumber.'";'); //"'.$questionNumber.'"
 				echo "<input type=hidden name='fldQuestionNumber' value='".$questionNumber."'>";
 				while( $aArr = $a->fetchArray() ){
 					echo $aArr["fldAnswerText"]." <input type='radio' name='fldAnswerNumber' value='".$aArr["fldAnswerNumber"]."'>";

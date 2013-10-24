@@ -16,9 +16,9 @@ addAnswer: in: database object, question number, answer text. returns: answer nu
 		return $questionText["fldQuestionText"];
 	}
 
-	function getRedirect($db, $questionNumber){
+	function getRedirect($db, $questionNumber){ //gets redirect from 
 		$r = $db->query('SELECT fldQuestionText FROM Question WHERE fldQuestionNumber="'.$questionNumber.'";');
-		$redirect = $r -> fetchArray();\
+		$redirect = $r -> fetchArray();
 		return $redirect["fldRedirect"];
 	}
 
