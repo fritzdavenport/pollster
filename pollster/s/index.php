@@ -26,7 +26,7 @@ if ($securityCheck){ //user has proper permissions if ($_SERVER['HTTP_REFERER']=
 				case 'ans': //state is ans. TAKES QUESTION (submitted from main), adds to db, asks answers, sends to sub
 					$qn = addQuestion($db, $_POST["fldQuestionText"] );
 					require_once('../v/head.php'); //doctype, head, body. requires $pageDesc
-					require_once('v/main.php'); //
+					require_once('v/adminHeader.php'); //
 					//ins question + form
 					require_once('v/answerForm.php'); //end 	
 					require_once('../v/foot.php'); //end 	
@@ -34,7 +34,7 @@ if ($securityCheck){ //user has proper permissions if ($_SERVER['HTTP_REFERER']=
 
 				case 'del': //TODO: JQUERIFY THIS TO VERIFY SUBMIT
 					require_once('../v/head.php'); //doctype, head, body. 
-					require_once('v/main.php'); //
+					require_once('v/adminHeader.php'); //
 					deleteTables($db); ?>
 					<p id="delete">Tables have been deleted successfully.</p> 
 					<?php
@@ -53,7 +53,7 @@ if ($securityCheck){ //user has proper permissions if ($_SERVER['HTTP_REFERER']=
 					<?php
 				default: //admin 'landing page'. Show the question form
 					require_once('../v/head.php'); //doctype, head, body. 
-					require_once('v/main.php'); //
+					require_once('v/adminHeader.php'); //
 					require_once('v/questionForm.php');
 					require_once('v/postForm.php');
 					require_once('../v/foot.php'); //end 	
@@ -62,7 +62,7 @@ if ($securityCheck){ //user has proper permissions if ($_SERVER['HTTP_REFERER']=
 		} else {//admin 'landing page'. Show the question form
 			$pageDesc = "This is the admin control panel for the Pollster web app";
 			require_once('../v/head.php'); //doctype, head, body. 
-			require_once('v/main.php'); //
+			require_once('v/adminHeader.php'); //
 			require_once('v/questionForm.php');
 			require_once('v/deleteForm.php');
 			require_once('v/postForm.php');
