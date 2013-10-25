@@ -14,7 +14,7 @@ $pageDesc = "This is the admin control panel for the Pollster web app"; //requir
 debug($_SERVER);
 
 if ($securityCheck){
-	debug($_SESSION);
+	//debug($_SESSION);
 	//if (isset($_POST) ) debug($_POST);
 	//if ($_SESSION["debug"]){ echo phpinfo(); }
 	if ( $db = new SQLite3($dbLocation) ){//database is setup and writeable

@@ -19,7 +19,7 @@ addAnswer: in: database object, question number, answer text. returns: answer nu
 	function createQuestionTable ($db){
 		$qta = $db->exec('CREATE TABLE Question '.'(fldQuestionNumber INTEGER PRIMARY KEY, 
 														fldQuestionText TEXT NOT NULL,
-														fldRedirect);');
+														fldRedirect TEXT DEFAULT "None Set" NOT NULL);');
 		if ($qta){ debug("table Question hadn't been made, but I got it.</br>");
 		} else { debug("Something went wrong with Question table creation"); 
 		}	
