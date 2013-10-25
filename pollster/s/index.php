@@ -11,7 +11,7 @@ $securityCheck=1; //user is supposed to be here, able to modify db.
 $rootLoc = getURL("s"); //gets the current URL excluding the current page and the directory in quotes
 $dbLocation = "../result";
 $pageDesc = "This is the admin control panel for the Pollster web app"; //required for head.php view
-debug($_SERVER);
+//debug($_SERVER);
 
 if ($securityCheck){
 	//debug($_SESSION);
