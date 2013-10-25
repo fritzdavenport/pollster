@@ -9,7 +9,7 @@ require_once('../m/miscFunctions.php'); //includes debug, getURL, and
 require_once('m/dbFunctions.php'); //includes addQuestion, addAnswer, deleteAnswer, deleteQuestion, renameAnswer, renameQuestion
 
 $securityCheck=1; //user is supposed to be here, able to modify db.
-$rootLoc = getURL("s"); //gets the current URL excluding the current page and the directory in quotes
+$rootLoc = getURL($_SERVER["PHP_SELF"], "s"); //gets the current URL excluding the current page and the directory in quotes
 $dbLocation = "../result";
 $pageDesc = "This is the admin control panel for the Pollster web app"; //required for head.php view
 //debug($_SERVER);

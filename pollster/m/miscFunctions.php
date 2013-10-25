@@ -24,7 +24,7 @@
         }
     }
 
-    function getURL($sourcestring=$_SERVER["PHP_SELF"], $delimiter="false"){ //gets the URL, excluding current file, and current directory if $delimiter = current dir. by default gets current
+    function getURL($sourcestring, $delimiter="false"){ //gets the URL, excluding current file, and current directory if $delimiter = current dir. by default gets current
         $urltmp=explode("/",$sourcestring);
         $urltmp2=implode("/", array_splice($urltmp, 0, count($urltmp)-($urltmp[count($urltmp)-2]==$delimiter?2:1) ) );
         return ((@$_SERVER["HTTPS"])?'https://':'http://').$_SERVER['SERVER_NAME'].$urltmp2;  
