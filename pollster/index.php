@@ -1,7 +1,7 @@
 <?php session_start() ?>
 <?php 
 $_SESSION["debug"]=( (isset($_SERVER["REMOTE_USER"]) && ($_SERVER["REMOTE_USER"]=="cdavenp1") ) || $_SERVER["HTTP_HOST"]=="localhost")? true : false;
-$_SESSION["debug"]=true; //override logic... just to get rid of the debugs
+// $_SESSION["debug"]=false; //override logic... just to get rid of the debugs
 
 //#### global requires (model functions)
 	require_once('m/dbFunctionsLite.php'); //includes includes checks and getters
@@ -19,7 +19,8 @@ $_SESSION["debug"]=true; //override logic... just to get rid of the debugs
 		if (checkQuestionTable($db) && checkAnswerTable($db) ) die("There was an error on the page, please contact the site administrator.");
 		if ( isset($_POST["fldQuestionNumber"]) && isset( $_POST["fldAnswerNumber"]) ){ //if a Question and Answer were POSTed we are trying to submit
 
-			$refURL=getURL( end(explode(".edu", $_SERVER["HTTP_REFERER"]) ) ); ///~cdavenp1/nfs295/pollster/index.php?qn=3 sends standardized url to geturl fxn 
+			$refURL=getURL( @end(explode($_SERVER["HTTP_HOST"], $_SERVER["HTTP_REFERER"]) ) ); ///~cdavenp1/nfs295/pollster/index.php?qn=3 sends standardized url to geturl fxn 
+			debug($_SERVER);
 			debug($_POST);
 			debug($refURL);
 			debug($rootLoc);
