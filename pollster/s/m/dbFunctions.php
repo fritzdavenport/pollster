@@ -19,15 +19,15 @@ addAnswer: in: database object, question number, answer text. returns: answer nu
 	function createQuestionTable ($db){
 		$qta = $db->exec('CREATE TABLE Question '.'(fldQuestionNumber INTEGER PRIMARY KEY, 
 														fldQuestionText TEXT NOT NULL,
-														fldRedirect TEXT DEFAULT "None Set" NOT NULL);');
+														fldRedirect TEXT);');
 		if ($qta){ debug("table Question hadn't been made, but I got it.</br>");
 		} else { debug("Something went wrong with Question table creation"); 
 		}	
 	}
 
 
-	function addQuestion($db, $qtext){//ques fldQuestionNumber, fldQuestionText, fldRefIn, fldRedirect
-		$db->exec('INSERT into Question VALUES (null, "'.$qtext.'");'); 
+	function addQuestion($db, $qtext, $redirect="null"){//ques fldQuestionNumber, fldQuestionText, fldRefIn, fldRedirect
+		$db->exec('INSERT into Question VALUES (null, "'.$qtext.'", "'.$redirect.'");'); 
 		$result = $db -> query("SELECT last_insert_rowid() FROM Question");
 		$rArr = $result -> fetchArray();
 		debug("INSERT ID: ".$rArr[0]);

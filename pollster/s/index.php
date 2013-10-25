@@ -24,7 +24,7 @@ if ($securityCheck){
 		if ($_POST){ //if there is a post var, or state submitted (if they clicked a button and got sent here
 			switch ($_POST["s"]) { //s for state
 				case 'ans': //state is ans. TAKES QUESTION (submitted from main), adds to db, asks answers, sends to sub
-					$qn = addQuestion($db, $_POST["fldQuestionText"] );
+					$qn = addQuestion($db, $_POST["fldQuestionText"]);
 					require_once('../v/head.php'); //doctype, head, body. requires $pageDesc
 					require_once('v/adminHeader.php'); //
 					//ins question + form
