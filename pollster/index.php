@@ -20,7 +20,7 @@ $_SESSION["debug"]=true; //override logic... just to get rid of the debugs
 		if ( isset($_POST["fldQuestionNumber"]) && isset( $_POST["fldAnswerNumber"]) ){ //if a Question and Answer were POSTed we are trying to submit
 
 			$refURL=getURL($_SERVER["HTTP_REFERER"]);
-			debug( end(explode(".edu", $_SERVER["HTTP_REFERER"]) );
+			debug( end(explode(".edu", $_SERVER["HTTP_REFERER"]) ) );
 			debug($_POST);
 			debug($refURL);
 			debug($rootLoc);
