@@ -1,14 +1,19 @@
 <?php session_start() ?>
 <?php 
-	$_SESSION["debug"]=( $_SERVER["HTTP_HOST"]=="localhost")? true : false;
-	// $_SESSION["debug"]=false;
-	$pageDesc = "This is the Pollster web app, used for live survey results."; //required for head.php view
-	$rootLoc = reset(explode("/s",$_SERVER["SCRIPT_URI"])); // [SCRIPT_URI] => https://www.uvm.edu/.../pollster/   excludes the php page and 's' directory if avail
-	$dbLocation = "result";
+$_SESSION["debug"]=( (isset($_SERVER["REMOTE_USER"]) && ($_SERVER["REMOTE_USER"]=="cdavenp1") ) || $_SERVER["HTTP_HOST"]=="localhost")? true : false;
+// $_SESSION["debug"]=false; //override logic... just to get rid of the debugs
+
 //#### global requires (model functions)
 	require_once('m/dbFunctionsLite.php'); //includes includes checks and getters
 	require_once('m/miscFunctions.php'); //includes debug
-	debug($rootLoc);
+
+//####setting page variables
+	$rootLoc = getURL("s"); //gets the current URL excluding the current page and the directory in quotes
+	$dbLocation = "result";
+	$pageDesc = "This is the Pollster web app, used for live survey results."; //required for head.php view
+
+
+
 //pre-check
 	if ( $db = new SQLite3($dbLocation) ){
 		if (checkQuestionTable($db) && checkAnswerTable($db) ) die("There was an error on the page, please contact the site administrator.");

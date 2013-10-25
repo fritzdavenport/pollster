@@ -3,6 +3,7 @@
 <?php
 $_SESSION["debug"]=( (isset($_SERVER["REMOTE_USER"]) && ($_SERVER["REMOTE_USER"]=="cdavenp1") ) || $_SERVER["HTTP_HOST"]=="localhost")? true : false;
 // $_SESSION["debug"]=false; //override logic... just to get rid of the debugs
+
 require_once('../m/miscFunctions.php'); //includes debug, getURL, and 
 //#### global requires (model functions)
 require_once('m/dbFunctions.php'); //includes addQuestion, addAnswer, deleteAnswer, deleteQuestion, renameAnswer, renameQuestion
