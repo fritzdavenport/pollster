@@ -3,23 +3,19 @@
 <?php
 $_SESSION["debug"]=( (isset($_SERVER["REMOTE_USER"]) && ($_SERVER["REMOTE_USER"]=="cdavenp1") ) || $_SERVER["HTTP_HOST"]=="localhost")? true : false;
 // $_SESSION["debug"]=false; //override logic... just to get rid of the debugs
-$securityCheck=1; //user is supposed to be here, able to modify db.
-$redirectURL=null;
-$databaseCheck=1; //database exists or was just created and is write-able
-$rootLoc = "//".$_SERVER['SERVER_NAME'].dirname($_SERVER['SCRIPT_NAME']); // //uvm.edu/~netid/.../pollster/
-$currLoc = "//".$_SERVER['SERVER_NAME'].$_SERVER["PHP_SELF"]; //uvm.edu/~netid/.../pollster/.../   ---> for scripts
-$httpCurrLoc = ((@$_SERVER["HTTPS"])?'https://':'http://').$_SERVER['SERVER_NAME'].$_SERVER["PHP_SELF"];  // http://uvm.edu/~netid/.../pollster/.../ --> for redirects
-$dbLocation = "../result";
-$pageDesc = "This is the admin control panel for the Pollster web app"; //required for head.php view
-require_once('m/miscFunctions.php'); //includes debug
+require_once('../m/miscFunctions.php'); //includes debug, getURL, and 
 //#### global requires (model functions)
 require_once('m/dbFunctions.php'); //includes addQuestion, addAnswer, deleteAnswer, deleteQuestion, renameAnswer, renameQuestion
 
+$securityCheck=1; //user is supposed to be here, able to modify db.
+$rootLoc = getURL("s"); //gets the current URL excluding the current page and the directory in quotes
+$dbLocation = "../result";
+$pageDesc = "This is the admin control panel for the Pollster web app"; //required for head.php view
 debug($_SERVER);
 
-if ($securityCheck){ //user has proper permissions if ($_SERVER['HTTP_REFERER']=="https:".$assignURL."/sec/reserve.php")
+if ($securityCheck){
 	debug($_SESSION);
-	if (isset($_POST) ) debug($_POST);
+	//if (isset($_POST) ) debug($_POST);
 	//if ($_SESSION["debug"]){ echo phpinfo(); }
 	if ( $db = new SQLite3($dbLocation) ){//database is setup and writeable
 		//deleteTables($db); //start with a clean slate, for debugging
