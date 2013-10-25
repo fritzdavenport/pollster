@@ -10,7 +10,7 @@
 				.":</td><td>".
 					$qArr["fldQuestionText"]
 				."</td>"."<td>".
-					$rootLoc."index.php?qn=".$qArr["fldQuestionNumber"]
+					$rootLoc."/index.php?qn=".$qArr["fldQuestionNumber"]
 				."</td></tr>";
 				// link to question
 				//link to redirect

@@ -2,7 +2,7 @@
 <!-- ADMIN.php - controller for pollster backend, self submits for various runstates -->
 <?php
 $_SESSION["debug"]=( (isset($_SERVER["REMOTE_USER"]) && ($_SERVER["REMOTE_USER"]=="cdavenp1")) || $_SERVER["HTTP_HOST"]=="localhost")? true : false;
-//$_SESSION["debug"]=false; //override logic... just to get rid of the debugs
+$_SESSION["debug"]=false; //override logic... just to get rid of the debugs
 $securityCheck=1; //user is supposed to be here, able to modify db.
 $redirectURL=null;
 $databaseCheck=1; //database exists or was just created and is write-able
