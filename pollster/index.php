@@ -18,9 +18,9 @@ $_SESSION["debug"]=true; //override logic... just to get rid of the debugs
 	if ( $db = new SQLite3($dbLocation) ){
 		if (checkQuestionTable($db) && checkAnswerTable($db) ) die("There was an error on the page, please contact the site administrator.");
 		if ( isset($_POST["fldQuestionNumber"]) && isset( $_POST["fldAnswerNumber"]) ){ //if a Question and Answer were POSTed we are trying to submit
-			
+
 			$refURL=getURL($_SERVER["HTTP_REFERER"]);
-			debug($_SERVER["HTTP_REFERER"]);
+			debug( end(explode(".edu", $_SERVER["HTTP_REFERER"]) );
 			debug($_POST);
 			debug($refURL);
 			debug($rootLoc);
