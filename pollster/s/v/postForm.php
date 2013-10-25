@@ -10,7 +10,8 @@
 				.":</td><td>".
 					$qArr["fldQuestionText"]
 				."</td>"."<td>".
-					$rootLoc."/index.php?qn=".$qArr["fldQuestionNumber"]
+					"<input READONLY type='text' value='".$rootLoc."/index.php?qn=".$qArr["fldQuestionNumber"]."' />"
+				."</td><td>Redirect: <input READONLY type='text' value='".($qArr['fldRedirect']!="null"?$qArr["fldRedirect"]:"Not Set")."' />"
 				."</td></tr>";
 				// link to question
 				//link to redirect

@@ -46,7 +46,7 @@
 			require_once("v/foot.php");
 		}//if get QN
 		else {
-			$questionText="Pollster version 1.05";
+			$questionText="Pollster version 1.1";
 			require_once("v/head.php");
 			require_once("v/questionHeader.php"); // view of the Question Title. requires $questionText
 			require_once("v/foot.php");
