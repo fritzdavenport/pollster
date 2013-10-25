@@ -1,6 +1,6 @@
 <?php session_start() ?>
 <?php 
-$_SESSION["debug"]=( (isset($_SERVER["REMOTE_USER"]) && ($_SERVER["REMOTE_USER"]=="cdavenp1") ) || $_SERVER["HTTP_HOST"]=="localhost")? true : false;
+	$_SESSION["debug"]=( (isset($_SERVER["REMOTE_USER"]) && ($_SERVER["REMOTE_USER"]=="cdavenp1") ) || $_SERVER["HTTP_HOST"]=="localhost")? true : false;
 // $_SESSION["debug"]=false; //override logic... just to get rid of the debugs
 
 //#### global requires (model functions)
@@ -52,3 +52,4 @@ $_SESSION["debug"]=( (isset($_SERVER["REMOTE_USER"]) && ($_SERVER["REMOTE_USER"]
 			require_once("v/foot.php");
 		}
 	} //if db
+?>

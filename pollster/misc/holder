@@ -1,0 +1,99 @@
+holder
+
+	$hardLoc = getcwd(); // /fs/aa/.../pollster 
+	$rootLoc = "//".$_SERVER['SERVER_NAME'].dirname($_SERVER['SCRIPT_NAME']); // //uvm.edu/~netid/.../pollster/
+	$httpCurrLoc = ((@$_SERVER["HTTPS"])?'https://':'http://').$_SERVER['SERVER_NAME'].$_SERVER["PHP_SELF"];  // http://uvm.edu/~netid/.../pollster/.../ --> for redirects
+
+<?php session_start();?>
+<!--main.php -->
+<?php
+	//$_SESSION["debug"]=( $_SERVER["HTTP_HOST"]=="localhost")? true : false;
+	$_SESSION["debug"]=false;
+	$pageDesc = "This is the Pollster web app, used for live survey results."; //required for head.php view
+	$dbLocation = "result";
+	require_once('m/miscFunctions.php'); //includes debug
+
+	//#### global requires (model functions)
+	require_once('m/dbFunctionsLite.php'); //includes includes checks and getters
+	if ( ) debug($_POST);
+
+	//cookie check, send to post
+
+	if ( $db = new SQLite3($dbLocation) ){
+		if (checkQuestionTable($db) && checkQuestionTable($db) ) die("There was an error on the page, please contact the site administrator.");
+		$redirect=null;
+		require_once('v/mainQuestion.php'); //requires $questionText, answer $arrayName = array('' => , );
+
+		if (isset($_POST['fldQuestionNumber'])) { //if there is a submitted question
+			if (isset($_POST['fldAnswerNumber'])) {//with a submitted answer
+			}
+		}
+		
+		// if (isset($_GET['s'])) {
+  //   		echo "This var is set so I will print.";
+		// }
+
+		require_once('v/post.php'); //requires $questionText, answer $arrayName = array('' => , );
+
+	}
+?>
+
+
+
+graveyard.php
+
+if (! (ifExists($database, 'Answer')) ){  			}
+function ifExists($db, $name){ //check if the table exists already. 
+				return $db->queryExec("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='".$name."';", $error);
+			}
+			
+
+
+
+		function dbQuery($database, $query){ //shortcut function for executing queries into the database. 
+				if ($DEBUG) echo $query;
+
+				try {
+					$ret = $database->queryExec($query, $error);
+				} catch (Exception $e) {
+					if ($DEBUG) echo "$e";
+				}
+				return $ret;
+			}
+
+
+			//dbQuery($database, 'CREATE TABLE Question '.'(QuestionNumber INTEGER PRIMARY KEY, 
+			//												QuestionText TEXT NOT NULL)'); //TABLE NAME, VARIABLES
+
+			//dbQuery($database, 'CREATE TABLE Answer '.'(QuestionNumber INTEGER NOT NULL, 
+															// AnswerNumber PRIMARY KEY, 
+															// AnswerText TEXT NOT NULL, 
+															// TimesPicked INTEGER DEFAULT 0,
+															// FOREIGN KEY(QuestionNumber) REFERENCES Question(QuestionNumber) )');
+
+
+
+
+
+
+
+			try {
+				$database->queryExec(
+			} catch (Exception $e) {
+				echo "";
+			}
+
+			$database->queryExec('CREATE TABLE Answer '.'(QuestionNumber INTEGER NOT NULL, 
+															AnswerNumber PRIMARY KEY, 
+															AnswerText TEXT NOT NULL, 
+															TimesPicked INTEGER DEFAULT 0,
+															FOREIGN KEY(QuestionNumber) REFERENCES Question(QuestionNumber) )',
+															$error);
+
+			// Get and show inputted data
+			$tableArray = $database->arrayQuery("SELECT * FROM Answer;"); //testing... trying to see if table was blank
+			print_r($tableArray);
+
+			$database->queryExec("SELECT * FROM Question;", $error );
+			$database->queryExec("UPDATE Answer SET TimesPicked = TimesPicked + 1 WHERE AnswerNumber='".$fAN."';"); //incrementDB 
+				//IMPLEMENTATION,
