@@ -13,7 +13,6 @@ $rootLoc = getURL($_SERVER["PHP_SELF"]); //gets the current URL excluding the cu
 $dbLocation = "/var/www/~cdavenp1/nfs295/pollster/result";
 // $dbLocation = "http://localhost/~cdavenp1/nfs295/pollster/result";
 $pageDesc = "This is the admin control panel for the Pollster web app"; //required for head.php view
-echo exec('whoami'); 
 
 if ($securityCheck){
 	if ( $db = new SQLite3($dbLocation) ){//database is setup and writeable
