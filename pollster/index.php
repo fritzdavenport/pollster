@@ -21,10 +21,9 @@
 				addAnswerCount($db, $_POST['fldQuestionNumber'], $_POST['fldAnswerNumber']);
    				header( 'Location: '.$rootLoc."/question".$_POST['fldQuestionNumber']."/show" ); //once the answer is submitted, redirect to the show page.
 			} //if referrer
-		} //if post QN
+		} //end if post
 
 		if ( isset($_GET["qn"]) ){
-			debug($_GET);
 			$questionNumber = $_GET["qn"];
 			$questionText=getQuestion($db, $questionNumber);
 			require_once("v/head.php");
@@ -38,12 +37,12 @@
 				require_once("v/askQuestion.php"); //view to ask question. 
 			}
 			require_once("v/foot.php");
-		}//if get QN
+		}//end if get QN
 		else {
 			$questionText="Pollster version 1.1";
 			require_once("v/head.php");
 			require_once("v/questionHeader.php"); // view of the Question Title. requires $questionText
 			require_once("v/foot.php");
 		}
-	} //if db
+	} //end if db
 ?>

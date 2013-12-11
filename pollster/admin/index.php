@@ -45,8 +45,9 @@ if ($securityCheck){
 				default: //admin 'landing page'. Show the question form
 					require_once('../v/head.php'); //doctype, head, body. 
 					require_once('v/adminHeader.php'); //
-					require_once('v/questionForm.php');
-					require_once('v/postForm.php');
+					require_once('v/createQuestion.php');
+					require_once('v/deleteForm.php');
+					require_once('v/displayQuestions.php');
 					require_once('../v/foot.php'); //end 	
 				break;
 			}
@@ -54,9 +55,9 @@ if ($securityCheck){
 			$pageDesc = "This is the admin control panel for the Pollster web app";
 			require_once('../v/head.php'); //doctype, head, body. 
 			require_once('v/adminHeader.php'); //
-			require_once('v/questionForm.php');
+			require_once('v/createQuestion.php');
 			require_once('v/deleteForm.php');
-			require_once('v/postForm.php');
+			require_once('v/displayQuestions.php');
 			require_once('../v/foot.php'); //end 				
 		}
 

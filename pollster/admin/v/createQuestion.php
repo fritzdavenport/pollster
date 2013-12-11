@@ -1,4 +1,4 @@
-<form action=<?php echo "'".$_SERVER['PHP_SELF']."'"; ?> method="post">
+<form id="createQuestions" action=<?php echo "'".$_SERVER['PHP_SELF']."'"; ?> method="post">
 	<p>
 		<input type=hidden name="s" value="ans">
 		<INPUT TYPE="text" name="fldQuestionText" placeholder="Please input question text">
@@ -11,4 +11,4 @@
 		</SELECT> How many answers will it have?
 	</p>
 	<INPUT TYPE=SUBMIT VALUE="submit">
-</form>
+</form>	
