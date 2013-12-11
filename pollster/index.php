@@ -8,11 +8,10 @@
 	require_once('m/miscFunctions.php'); //includes debug
 
 //####setting page variables
-	$rootLoc = getURL($_SERVER["PHP_SELF"]); //gets the current URL excluding the current page and the directory in quotes
-	$dbLocation = "result";
+	$rootLoc = getURL(); //gets the current URL up to and including the /pollster part
+	$dbLocation = getFS()."/result"; //gets the FS path up to and including the /pollster part
 	$pageDesc = "This is the Pollster web app, used for live survey results."; //required for head.php view
-	debug($_GET);
-	debug($_POST);
+
 //pre-check
 	if ( $db = new SQLite3($dbLocation) ){
 		if (checkQuestionTable($db) && checkAnswerTable($db) ) die("There was an error on the page, please contact the site administrator.");
@@ -20,7 +19,7 @@
 			if ( strpos($_SERVER["HTTP_HOST"],$_SERVER["HTTP_REFERER"]) === false ) { //and if they were sent from this server
 				$_SESSION["alreadyAnswered"][ $_POST["fldQuestionNumber"] ]=1; //make an array of QN's answered, make a function to check if dne or not in array
 				addAnswerCount($db, $_POST['fldQuestionNumber'], $_POST['fldAnswerNumber']);
-   				header( 'Location: '.$currLoc."question".$_POST['fldQuestionNumber']."/show" ); //once the answer is submitted, redirect to the show page.
+   				header( 'Location: '.$rootLoc."/question".$_POST['fldQuestionNumber']."/show" ); //once the answer is submitted, redirect to the show page.
 			} //if referrer
 		} //if post QN
 

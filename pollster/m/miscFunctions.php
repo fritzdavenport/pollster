@@ -24,9 +24,12 @@
         }
     }
 
-    function getURL($sourcestring){ //gets the URL, excluding and the "admin" directory
-        $urltmp=explode("/",$sourcestring);array_search("admin", $urltmp)===false;
-        $urltmp2=implode("/", array_splice($urltmp, 0, count($urltmp)-(array_search("admin", $urltmp)===false?2:1) ) );
-        return ((@$_SERVER["HTTPS"])?'https://':'http://').$_SERVER['SERVER_NAME'].$urltmp2;  
+    function getURL(){ //gives the full path to
+        $x=explode('/',$_SERVER["PHP_SELF"]);
+        return ((@$_SERVER["HTTPS"])?'https://':'http://').$_SERVER['SERVER_NAME'].implode("/",array_splice( $x,0,array_search("pollster",$x)+1 ) );
+    }
+    function getFS(){
+        $x=explode('/',$_SERVER['SCRIPT_FILENAME']);
+        return implode("/",array_splice( $x,0,array_search("pollster",$x)+1 ) );
     }
 ?>
