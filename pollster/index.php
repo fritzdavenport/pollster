@@ -29,6 +29,7 @@
 			require_once("v/head.php");
 			require_once("v/questionHeader.php"); // view of the Question Title. requires $questionText
 			if ( isset($_GET["sh"]) ) {
+				// debug($_GET);
 				$dbResult = getAnswerArray($db, $questionNumber);
 				$answersList = array();
 				foreach ($dbResult as $row ) $answersList[ $row["fldAnswerText"] ] = $row["fldTimesPicked"]; 

@@ -1,5 +1,5 @@
 <form id="createQuestions" action=<?php echo "'".$_SERVER['PHP_SELF']."'"; ?> method="post">
-	<p>
+	<p> Create A New Question:
 		<input type=hidden name="s" value="ans">
 		<INPUT TYPE="text" name="fldQuestionText" placeholder="Please input question text">
 		<SELECT name="numAnswers">

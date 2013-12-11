@@ -44,16 +44,15 @@ h1,h2,h3,h4,h5 {
 	color: #ffff00;
 }
 
+a { color: yellow;}
+a:visited {color: #aaaa00;}
+
 header{	text-shadow: 1px 1px 3px #555;}
 header h1 {
 	text-align: center;
 	font: 40px "Georgia", serif;
 	font-family: Bariol; 
 	/*font-size: 150%;*/}
-
-#tblAnswers {
-	display: none;
-}
 
 .button { 	/* generic properties of each button */
 	padding: 5%; margin: 5%;
@@ -91,11 +90,8 @@ header h1 {
 		height:100%;
 		width: 12%;
 	}
-	#askQuestion .answer input:before{
-		content:\n;
-	}
-}
 
+}
 @media all and (max-width: 600px) and (min-width: 20px){	
 	#askQuestion {	}
 
@@ -109,18 +105,51 @@ header h1 {
 		text-align:center;
 	}
 }
+
+#tblAnswers, #displayQuestions {
+	margin: 0 auto;
+}
+
+#displayQuestions {
+	border-collapse: collapse;
+}
+
+#displayQuestions .question {
+	background-color: rgba(200,200,200,.2);
+}
+
+#displayQuestions th[scope="row"] {
+	padding-right:4%;
+}
+
+
+#tblAnswers th {
+	padding: 1em;
+	background-color: rgba(255,255,255,.3);
+}
+
 #askQuestion input[type="submit"] {
 	margin: 0 auto;
 	width: 5em;
 	display:block;
 }
 
+#createQuestions{
+	float:left;
+}
+
+#createQuestions p{
+	display: inline;
+}
 
 #createQuestions input[type="submit"] {
 	display:inline-block;
-	float:left;
 }
 
 #deleteQuestions {
 	display:inline-block;
+}
+
+#tblAnswers td {
+	text-align: center;
 }
