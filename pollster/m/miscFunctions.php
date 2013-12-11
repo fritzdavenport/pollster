@@ -24,9 +24,9 @@
         }
     }
 
-    function getURL($sourcestring, $delimiter="false"){ //gets the URL, excluding current file, and current directory if $delimiter = current dir. by default gets current
-        $urltmp=explode("/",$sourcestring);
-        $urltmp2=implode("/", array_splice($urltmp, 0, count($urltmp)-($urltmp[count($urltmp)-2]==$delimiter?2:1) ) );
+    function getURL($sourcestring){ //gets the URL, excluding and the "admin" directory
+        $urltmp=explode("/",$sourcestring);array_search("admin", $urltmp)===false;
+        $urltmp2=implode("/", array_splice($urltmp, 0, count($urltmp)-(array_search("admin", $urltmp)===false?2:1) ) );
         return ((@$_SERVER["HTTPS"])?'https://':'http://').$_SERVER['SERVER_NAME'].$urltmp2;  
     }
 ?>

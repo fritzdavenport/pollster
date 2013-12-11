@@ -7,5 +7,6 @@
 					echo $aArr["fldAnswerText"]." <input type='radio' name='fldAnswerNumber' value='".$aArr["fldAnswerNumber"]."'>";
 				}
 			?>
-			<INPUT TYPE=SUBMIT VALUE="submit">
+			<INPUT TYPE="submit" VALUE="submit">
 		</form>
+		<?php debug($_SERVER); ?>

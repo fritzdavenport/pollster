@@ -1,15 +1,19 @@
 <!-- a view to display table results of selected Question Number -->
-<form>
-	<table>
+	<table id="tblAnswers">
 		<?php
-			$answers = getAnswerArray($db, $questionNumber);
-			debug($answers);
-			foreach ($answers as $number => $array) {
-				echo "<tr>".
-				"<td>Answer: ".$array["fldAnswerText"]."</td>
-				<td>".$array["fldTimesPicked"]."</td>".
-				"</tr>"; //Array with fldAnswerText fldTimesPicked
-			}
+			echo "<thead>";
+				echo "<tr>";
+					foreach (array_keys($answersList) as $key) {
+						echo "<th scope='col'>".$key."</th>";
+					}
+				echo "</tr>";
+			echo "</thead>";
+			echo "<tbody>";
+				echo "<tr>";
+					foreach ($answersList as $value) {
+						echo "<td>".$value."</td>";
+					}
+				echo "</tr>";
+			echo "</tbody>";
 		?>
 	</table>
-</form>

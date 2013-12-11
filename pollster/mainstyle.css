@@ -14,9 +14,34 @@ footer, header, hgroup, menu, nav, section { display: block;}
 	font-family: Bariol;
 	src: url('http://www.uvm.edu/~cdavenp1/fonts/Bariol.otf');}
 /********** /cust fonts *******/
-
+html {height:100%; width: 100%;}
 body {
-	background-color: #b6d9e0;
+	/* fallback */
+	background-color: #556f9c;
+	color: white;
+
+	/* cross browser center fade */
+	/*background: -webkit-gradient(radial, center center, 0, center center, 460, from( #556f9c), to(#000));
+	background: -webkit-radial-gradient(circle, #556f9c, #000);
+	background: -moz-radial-gradient(circle, #556f9c, #000);
+	background: -ms-radial-gradient(circle, #556f9c, #000);*/
+
+	/* cross browser top to bottom fade*/
+	/*background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#000), to(#556f9c));
+	background: -webkit-linear-gradient(top, #556f9c, #000);
+	background: -moz-linear-gradient(top, #556f9c, #000);
+	background: -ms-linear-gradient(top, #556f9c, #000);
+	background: -o-linear-gradient(top, #556f9c, #000);*/
+
+	/* cross browser top to mid to bottom */
+	background: -webkit-gradient(linear, center top, center bottom, from(#000), color-stop(0.5, #556f9c), to(#000));
+	background: -webkit-linear-gradient(top, #000, #556f9c, #000);
+	background: -moz-linear-gradient(top, #000, #556f9c, #000);
+	background: -ms-linear-gradient(top, #000, #556f9c, #000);
+	background: -o-linear-gradient(top, #000, #556f9c, #000); 
+}
+h1,h2,h3,h4,h5 {
+	color: #ffff00;
 }
 
 header{	text-shadow: 1px 1px 3px #555;}
@@ -25,6 +50,10 @@ header h1 {
 	font: 40px "Georgia", serif;
 	font-family: Bariol; 
 	/*font-size: 150%;*/}
+
+#tblAnswers {
+	display: none;
+}
 
 .button { 	/* generic properties of each button */
 	padding: 5%; margin: 5%;

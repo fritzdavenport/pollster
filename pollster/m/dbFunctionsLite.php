@@ -27,8 +27,15 @@
 
 	function getAnswerArray($db, $questionNumber){
 		$a = $db->query('SELECT "fldAnswerText", "fldTimesPicked" FROM Answer WHERE fldQuestionNumber="'.$questionNumber.'";');
+		$answers = array();
 		while ($temp = $a -> fetchArray() ) $answers[]= $temp;
-		return $answers;
+		if (!!$answers) {  //typecast a as a bool for a definite true/false
+			return $answers;
+		} else {
+			$btr=debug_backtrace();
+			echo "There was an unexpected error. Are you sure you are at a valid question? m/dbFL:".$btr[0]['line'];
+			exit;
+		}
 	}
 
 	function checkAnswerTable ($db){
