@@ -8,7 +8,7 @@ require_once('../m/miscFunctions.php'); //includes debug, getURL, and getFS
 //#### global requires (model functions)
 require_once('m/dbFunctions.php'); //includes addQuestion, addAnswer, deleteAnswer, deleteQuestion, renameAnswer, renameQuestion
 
-$securityCheck=1; //user is supposed to be here, able to modify db.
+$securityCheck=( (isset($_SERVER["REMOTE_USER"]) && ($_SERVER["REMOTE_USER"]=="cdavenp1") ) || $_SERVER["HTTP_HOST"]=="localhost")? true : false;; //user is supposed to be here, able to modify db.
 $rootLoc = getURL(); //gets the current URL up to and including the /pollster part
 $dbLocation = getFS()."/result"; //gets the FS path up to and including the /pollster part
 $pageDesc = "This is the admin control panel for the Pollster web app"; //required for head.php view
@@ -66,5 +66,6 @@ if ($securityCheck){
 		die();
 	}
 } else { //user doesn't have proper permissions
-	//meta-redirect? Display error message and link out?
+        echo "You don't have sufficient permission to reach this page. If this is in error please contact your instructor. ";
+		die();
 }

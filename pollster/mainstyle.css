@@ -134,8 +134,12 @@ header h1 {
 	display:block;
 }
 
+#displayQuestions th {
+    text-align:center;
+}
+
 #createQuestions{
-	float:left;
+	/*float:left;*/
 }
 
 #createQuestions p{
@@ -147,7 +151,7 @@ header h1 {
 }
 
 #deleteQuestions {
-	display:inline-block;
+	/*display:inline-block;*/
 }
 
 #tblAnswers td {

@@ -1,14 +1,16 @@
 <form id="createQuestions" action=<?php echo "'".$_SERVER['PHP_SELF']."'"; ?> method="post">
-	<p> Create A New Question:
+	<p>
 		<input type=hidden name="s" value="ans">
-		<INPUT TYPE="text" name="fldQuestionText" placeholder="Please input question text">
+		<INPUT TYPE="text" name="fldQuestionText" placeholder="New Question Text">  
+	</p>
+	<p>
 		<SELECT name="numAnswers">
 		<?php 	for ($i=2; $i < 10; $i++) {  
 			echo "<OPTION ";
 			if ($i == 4) echo "selected";
-			echo ">".$i."</OPTION>";
+			echo "value='".$i."'>".$i." Answers</OPTION>";
 		} ?>
-		</SELECT> How many answers will it have?
+		</SELECT> 
 	</p>
 	<INPUT TYPE=SUBMIT VALUE="submit">
 </form>	
