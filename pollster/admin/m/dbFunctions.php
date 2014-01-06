@@ -1,15 +1,14 @@
-<!-- dbFunctions.php includes 
-checkQuestionsTable in: database object, returns: T/F if table exists
-createQuestionsTable in: database object, returns: none. status msg on debug. 
-addQuestion: in: database object, question text. returns: question number.
-
-
-checkAnswerTable in: database object, returns: T/F if table exists
-createAnswerTable in: database object, returns: none. status msg on debug. 
-addAnswer: in: database object, question number, answer text. returns: answer number.
--->
-
 <?php
+// dbFunctions.php includes 
+// checkQuestionsTable in: database object, returns: T/F if table exists
+// createQuestionsTable in: database object, returns: none. status msg on debug. 
+// addQuestion: in: database object, question text. returns: question number.
+
+
+// checkAnswerTable in: database object, returns: T/F if table exists
+// createAnswerTable in: database object, returns: none. status msg on debug. 
+// addAnswer: in: database object, question number, answer text. returns: answer number.
+
 
 	function readCSV($csvFile){
 		$fp = fopen($csvFile, 'r');
