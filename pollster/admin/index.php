@@ -7,8 +7,10 @@ $_SESSION["debug"]=( (isset($_SERVER["REMOTE_USER"]) && ($_SERVER["REMOTE_USER"]
 require_once('../m/miscFunctions.php'); //includes debug, getURL, and getFS
 //#### global requires (model functions)
 require_once('m/dbFunctions.php'); //includes addQuestion, addAnswer, deleteAnswer, deleteQuestion, renameAnswer, renameQuestion
-
-$securityCheck=( (isset($_SERVER["REMOTE_USER"]) && ($_SERVER["REMOTE_USER"]=="cdavenp1") ) || $_SERVER["HTTP_HOST"]=="localhost")? true : false;; //user is supposed to be here, able to modify db.
+$accessFile = 'ax.csv';
+$accessList = readCSV($accessFile); //access list file in the format NETID, NETID, NETID
+print_r($accessList);
+$securityCheck=( (isset($_SERVER["REMOTE_USER"]) && (!(array_search($_SERVER["REMOTE_USER"], $accessList)===FALSE) ) ) || $_SERVER["HTTP_HOST"]=="localhost")? true : false;; //user is supposed to be here, able to modify db.
 $rootLoc = getURL(); //gets the current URL up to and including the /pollster part
 $dbLocation = getFS()."/result"; //gets the FS path up to and including the /pollster part
 $pageDesc = "This is the admin control panel for the Pollster web app"; //required for head.php view
@@ -29,9 +31,18 @@ if ($securityCheck){
 					require_once('../v/foot.php'); //end 
 				break;
 
+				case 'adm':
+					if (isset($_POST['accessList'])) {
+						$newList = explode(",", $_POST['accessList']);
+						foreach ($newList as $value) $value=trim($value);
+						writeCSV($accessFile, $newList);
+					}
+					header( 'Location: '.$rootLoc."/admin/?state='as'" );
+				break;
+
 				case 'del':
 					deleteTables($db);
-					header( 'Location: '.$rootLoc."/admin/?st='ds'" );
+					header( 'Location: '.$rootLoc."/admin/?state='ds'" );
 				break;
 
 				case 'sub': //state is sub -> submits answers and goes back to default runstate.
@@ -40,11 +51,12 @@ if ($securityCheck){
 							addAnswer($db, $_POST["fldQuestionNumber"], $value);
 						}
 					}
-					header( 'Location: '.$rootLoc."/admin/?st='ss'" );
+					header( 'Location: '.$rootLoc."/admin/?state='ss'" );
 					break;
 				default: //admin 'landing page'. Show the question form
 					require_once('../v/head.php'); //doctype, head, body. 
-					require_once('v/adminHeader.php'); //
+					require_once('v/adminHeader.php');
+					require_once('v/accessForm.php');
 					require_once('v/createQuestion.php');
 					require_once('v/deleteForm.php');
 					require_once('v/displayQuestions.php');
@@ -55,6 +67,8 @@ if ($securityCheck){
 			$pageDesc = "This is the admin control panel for the Pollster web app";
 			require_once('../v/head.php'); //doctype, head, body. 
 			require_once('v/adminHeader.php'); //
+			require_once('v/adminHeader.php');
+			require_once('v/accessForm.php');
 			require_once('v/createQuestion.php');
 			require_once('v/deleteForm.php');
 			require_once('v/displayQuestions.php');

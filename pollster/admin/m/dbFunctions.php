@@ -11,6 +11,22 @@ addAnswer: in: database object, question number, answer text. returns: answer nu
 
 <?php
 
+	function readCSV($csvFile){
+		$fp = fopen($csvFile, 'r');
+		$line_of_text = fgetcsv($fp, 1024);
+		// while (!feof($fp) ) {
+		// 	$line_of_text[] = fgetcsv($fp, 1024);
+		// }
+		fclose($fp);
+		return $line_of_text;
+	}
+
+	function writeCSV($csvFile, $array){ //
+		$fp = fopen($csvFile, 'w');
+		fputcsv($fp, $array);
+		fclose($fp);
+	}
+
 	function checkQuestionTable ($db){
 		$q = @$db->query('SELECT * FROM Question'); 
 		return $q === false; 

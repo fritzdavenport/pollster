@@ -23,23 +23,25 @@
 			} //if referrer
 		} //end if post
 
-		if ( isset($_GET["qn"]) ){
+		if ( isset($_GET["qn"]) ){ // IF WE ARE ASKING THEM A SPECIFIC QUESTION
 			$questionNumber = $_GET["qn"];
 			$questionText=getQuestion($db, $questionNumber);
 			require_once("v/head.php");
 			require_once("v/questionHeader.php"); // view of the Question Title. requires $questionText
-			if ( isset($_GET["sh"]) ) {
+			
+			if ( isset($_GET["sh"]) ) { //IF THEY HAVE ALREADY ANSWERED THE QUESTION, SHOW THEM THE ANSWERS
 				// debug($_GET);
 				$dbResult = getAnswerArray($db, $questionNumber);
 				$answersList = array();
 				foreach ($dbResult as $row ) $answersList[ $row["fldAnswerText"] ] = $row["fldTimesPicked"]; 
 				require_once("v/showAnswer.php"); //view to show the answers.
-			} else {
+			} else { // OR SHOW THEM THE QUESTION
 				require_once("v/askQuestion.php"); //view to ask question. 
 			}
+			
 			require_once("v/foot.php");
 		}//end if get QN
-		else {
+		else { // LANDING PAGE
 			$questionText="Pollster version 1.1";
 			require_once("v/head.php");
 			require_once("v/questionHeader.php"); // view of the Question Title. requires $questionText

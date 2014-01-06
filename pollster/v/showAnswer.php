@@ -1,4 +1,5 @@
 <!-- a view to display table results of selected Question Number -->
+	<span id="classSize" style="display:none"><?php echo 42;//getClassSize(); ?></span>
 	<table id="tblAnswers">
 		<?php
 			echo "<thead>";
