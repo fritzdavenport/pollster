@@ -1,6 +1,6 @@
 <?php session_start() ?>
-<!-- ADMIN.php - controller for pollster backend, self submits for various runstates -->
 <?php
+// ADMIN.php - controller for pollster backend, self submits for various runstates
 // $_SESSION["debug"]=( (isset($_SERVER["REMOTE_USER"]) && ($_SERVER["REMOTE_USER"]=="cdavenp1") ) || $_SERVER["HTTP_HOST"]=="localhost")? true : false;
 $_SESSION["debug"]=false; //override logic... just to get rid of the debugs
 
