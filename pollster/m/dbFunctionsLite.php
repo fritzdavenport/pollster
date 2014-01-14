@@ -8,6 +8,26 @@
 // checkAnswerTable in: database object, returns: T/F if table exists
 // createAnswerTable in: database object, returns: none. status msg on debug. 
 // addAnswer: in: database object, question number, answer text. returns: answer number.
+	function checkAnswerTable ($db){
+		$p = @$db->query('SELECT * FROM Answer'); //test if number is within range
+		return $p === false; 
+	}
+
+	function checkQuestionTable ($db){
+		$q = @$db->query('SELECT * FROM Question'); 
+		return $q === false; 
+	}
+
+	function checkAppTable ($db){
+		$a = @$db->query('SELECT * FROM App'); //test if number is within range
+		return $a === false; 
+	}
+
+	function getMax($db){
+		$qm = @$db->query('SELECT fldOptionValue FROM App WHERE fldOptionName="max";');
+		$m = $qm->fetchArray(SQLITE3_NUM);
+		return $m[0];
+	}
 
 	function getQuestion($db, $questionNumber){ //gets question text of supplied question number
 		$q = $db->query('SELECT fldQuestionText FROM Question WHERE fldQuestionNumber="'.$questionNumber.'";');
@@ -37,15 +57,4 @@
 			exit;
 		}
 	}
-
-	function checkAnswerTable ($db){
-		$p = @$db->query('SELECT * FROM Answer'); //test if number is within range
-		return $p === false; 
-	}
-
-	function checkQuestionTable ($db){
-		$q = @$db->query('SELECT * FROM Question'); 
-		return $q === false; 
-	}
-
 ?>

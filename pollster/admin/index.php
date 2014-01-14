@@ -18,6 +18,7 @@ $pageDesc = "This is the admin control panel for the Pollster web app"; //requir
 if ($securityCheck){
 	if ( $db = new SQLite3($dbLocation) ){//database is setup and writeable
 		//deleteTables($db); //start with a clean slate, for debugging
+		if ( checkAppTable($db) ) createAppTable($db);
 		if ( checkQuestionTable($db) ) createQuestionTable($db); //if a table doesn't exist, add it
 		if ( checkAnswerTable($db) ) createAnswerTable($db);
 		if ($_POST){ //if there is a post var, or state submitted (if they clicked a button and got sent here
@@ -29,6 +30,14 @@ if ($securityCheck){
 					//ins question + form
 					require_once('v/answerForm.php'); //end 	
 					require_once('../v/foot.php'); //end 
+				break;
+
+				case 'max':
+					if (isset($_POST['maxVal'])) {
+						$sani = htmlspecialchars($_POST['maxVal']);
+						updateMax($db, $sani);
+					}
+					header( 'Location: '.$rootLoc."/admin/?state='ms'" );
 				break;
 
 				case 'adm':
@@ -56,6 +65,7 @@ if ($securityCheck){
 				default: //admin 'landing page'. Show the question form
 					require_once('../v/head.php'); //doctype, head, body. 
 					require_once('v/adminHeader.php');
+					require_once('v/maxForm.php');
 					require_once('v/accessForm.php');
 					require_once('v/createQuestion.php');
 					require_once('v/deleteForm.php');
@@ -68,6 +78,7 @@ if ($securityCheck){
 			require_once('../v/head.php'); //doctype, head, body. 
 			require_once('v/adminHeader.php'); //
 			require_once('v/adminHeader.php');
+			require_once('v/maxForm.php');
 			require_once('v/accessForm.php');
 			require_once('v/createQuestion.php');
 			require_once('v/deleteForm.php');

@@ -31,13 +31,47 @@
 		return $q === false; 
 	}
 
+	function checkAnswerTable ($db){
+		$p = @$db->query('SELECT * FROM Answer'); //test if number is within range
+		return $p === false; 
+	}
+
+	function checkAppTable ($db){
+		$a = @$db->query('SELECT * FROM App'); //test if number is within range
+		return $a === false; 
+	}
+
 	function createQuestionTable ($db){
 		$qta = $db->exec('CREATE TABLE Question '.'(fldQuestionNumber INTEGER PRIMARY KEY, fldQuestionText TEXT NOT NULL, fldRedirect TEXT);');
 		if ($qta){ debug("table Question hadn't been made, but I got it.</br>");
 		} else { debug("Something went wrong with Question table creation"); 
-		}	
+		}
 	}
 
+	function createAnswerTable($db){ //ans AnsNumber, QNumber, AnsText, TimesPicked
+		$cta = $db->exec('CREATE TABLE Answer '.'(	fldAnswerNumber INTEGER PRIMARY KEY,fldQuestionNumber INTEGER,fldAnswerText TEXT NOT NULL, fldTimesPicked INTEGER DEFAULT 0,FOREIGN KEY (fldQuestionNumber) REFERENCES Question(fldQuestionNumber) ON DELETE CASCADE );');
+		if ($cta){ debug("table Answer hadn't been made, but I got it.</br>");
+		} else { debug("Something went wrong with Answer table creation"); 
+		}
+	}
+
+	function createAppTable ($db){ // table for application wide settings
+		$r = $db->exec('CREATE TABLE App '.'(fldOptionName TEXT NOT NULL, fldOptionValue TEXT NOT NULL);');
+		$db->exec('INSERT into App VALUES ("max", "val");'); 
+		if ($r){ debug("table App hadn't been made, but I got it.</br>");
+		} else { debug("Something went wrong with App table creation"); 
+		}
+	}
+
+	function getMax($db){
+		$qm = @$db->query('SELECT fldOptionValue FROM App WHERE fldOptionName="max";');
+		$m = $qm->fetchArray(SQLITE3_NUM);
+		return $m[0];
+	}
+
+	function updateMax($db, $newValue){
+		$db->exec('UPDATE App SET fldOptionValue = '.$newValue.' WHERE fldOptionName="max";');
+	}
 
 	function addQuestion($db, $qtext, $redirect="null"){//ques fldQuestionNumber, fldQuestionText, fldRefIn, fldRedirect
 		$db->exec('INSERT into Question VALUES (null, "'.$qtext.'", "'.$redirect.'");'); 
@@ -58,17 +92,7 @@
 		return $as;
 	}
 
-	function checkAnswerTable ($db){
-		$p = @$db->query('SELECT * FROM Answer'); //test if number is within range
-		return $p === false; 
-	}
 
-	function createAnswerTable($db){ //ans AnsNumber, QNumber, AnsText, TimesPicked
-		$cta = $db->exec('CREATE TABLE Answer '.'(	fldAnswerNumber INTEGER PRIMARY KEY,fldQuestionNumber INTEGER,fldAnswerText TEXT NOT NULL, fldTimesPicked INTEGER DEFAULT 0,FOREIGN KEY (fldQuestionNumber) REFERENCES Question(fldQuestionNumber) ON DELETE CASCADE );');
-		if ($cta){ debug("table Answer hadn't been made, but I got it.</br>");
-		} else { debug("Something went wrong with Answer table creation"); 
-		}
-	}
 
 	function addAnswer($db, $questionNumber, $answerText){
 		$db->exec('INSERT into Answer VALUES (null,"'.$questionNumber.'","'.$answerText.'",0)');
@@ -91,10 +115,6 @@
 			case 'value':
 				
 				$db -> exec('UPDATE Answer SET fldAnswerText="'.$newText.'" WHERE fldAnswerText="'.$oldText.'";' );
-				break;
-
-			case 'value':
-				# code...
 				break;
 			
 			default:

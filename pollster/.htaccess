@@ -3,5 +3,6 @@ RewriteEngine On	# Turn on the rewriting engine
 RewriteCond %{REQUEST_FILENAME} !-s
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(?:question)([0-9]+)(?:/)?$ /~cdavenp1/nfs295/pollster/index.php?qn=$1 [NC]
-RewriteRule ^(?:question)([0-9]+)(?:/)(show)(?:/)?$ /~cdavenp1/nfs295/pollster/index.php?qn=$1&sh=1 [NC,L] 
+RewriteRule ^(?:question)([0-9]+)(?:/)(show)(?:/)?$ /~cdavenp1/nfs295/pollster/index.php?qn=$1&sh=1 [NC] 
+RewriteRule ^(?:question)([0-9]+)(?:/)(show)(?:/)(update)(?:/)?$ /~cdavenp1/nfs295/pollster/index.php?qn=$1&sh=1&up=1 [NC,L] 
 #Handles API requests, NC=CaseInsensitive, L=StopWhenMatched

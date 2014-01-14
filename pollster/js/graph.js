@@ -10,6 +10,19 @@ $.fn.textWidth = function(text, font) { //original credit goes to http://jsfiddl
 	$('#remove').remove(); //cleaning up
 	return width;
 }; 
+
+$.fn.textHeight = function(text, font) { //original credit goes to http://jsfiddle.net/philfreo/MqM76/
+	//this is a $=jQuery   fn=prototype extension method.
+	//when used on a JQuery object, determines the width of text inside the element. 
+	//Can also be used by passing static text (specified font optional) in.
+	$.fn.textHeight.fakeEl;
+	if (!$.fn.textHeight.fakeEl) $.fn.textHeight.fakeEl = $('<span id="remove" style="display:inline-block">').hide().appendTo(document.body);
+	$.fn.textHeight.fakeEl.text(text || this.val() || this.text()).css('font', font || this.css('font'));
+	var width = $.fn.textHeight.fakeEl.height();
+	delete $.fn.textHeight.fakeEl; //cleaning up
+	$('#remove').remove(); //cleaning up
+	return width;
+}; 
 // -----------------------------------------------------------------------------------------------
 function Bar(){ //bar object for the table. holds relevant data
 	this.barObject;
@@ -21,7 +34,7 @@ function Bar(){ //bar object for the table. holds relevant data
 	this.abbrText;
 	this.abbrWidth;
 	this.left;
-	this.height;
+	this.barHeight;
 }
 
 function textShorten(str, width){ 
@@ -45,7 +58,7 @@ function textShorten(str, width){
 		//console.log("newStr "+newStr);
 		var newStrSize= $.fn.textWidth(newStr);
 		//console.log("newStrSize "+newStrSize);
-		console.log(newStr+" "+newStrSize);
+		//console.log(newStr+" "+newStrSize);
 return {"abbrText":newStr, "abbrWidth":newStrSize}; 
 	} else { //bump out and return what was given
 		return {"abbrText":str, "abbrWidth":initialSize};
@@ -74,9 +87,11 @@ function getData(){
 		//extracts 'numbers' from table cells
 
 		var h=0;// index counter, this 'each' goes through every table header cell and extracts relevant information
+		console.log('hello');
 		data.table.find('th').each(function(){
+			//console.log( $(this ));
 			data.bars.push(new Bar); 
-			data.bars[h].labelText=this.innerText;
+			data.bars[h].labelText= String( $.trim(this.textContent) );
 			thisTextWidth=$(this).textWidth();
 			data.bars[h].labelTextWidth=thisTextWidth;
 			if(thisTextWidth > data.longestTextWidth){
@@ -90,7 +105,7 @@ function getData(){
 	
 		var t=0; // index counter, this 'each' goes through every table cell and extracts relevant information
 		data.table.find('td').each(function(){
-			thisNumber = Number(this.innerText);
+			thisNumber = Number( $.trim(this.textContent) ); //error here
 			data.bars[t].number=thisNumber;
 			if(thisNumber > data.highestNumber){
 				//console.log("true");
@@ -106,10 +121,16 @@ function getData(){
 	// do these on the first run, don't need to be calculated again	
 	data.avgTextWidth=data.totalTextWidth/data.bars.length;
 
-	//set the max pixel value depending on how it's configured in the admin console. NOTE: if it can't find #classSize, it defaults to relative
-	data.max=( isNaN($("#classSize").text()) )? (Number( $("#classSize").text() )+1) : (Number(data.highestNumber)*1.2)+1; 
 	}
 
+	data.min=$.fn.textHeight('M');
+
+	//set the max pixel value depending on how it's configured in the admin console. NOTE: if it can't find #classSize, it defaults to relative
+	if ( !isNaN( $("#classSize").textContent ) ){ // if it is set to 'val'
+		data.max=Number( $("#classSize").textContent )+1; //##### fix classSize ratio
+	} else { // if the max value is a number (ie class size = 10 )
+		data.max=(Number(data.highestNumber)*1.2)+1; 
+	} 
 	//And we can get some more data about the page itself
 	data.pageWidth=$('html').outerWidth();
 	data.graphHeight=( $('html').outerHeight()-$('header h1').outerHeight(true) )*.6;
@@ -127,11 +148,16 @@ function getData(){
 
 	setAbbr();
 
-	var self;
+	var self,high;
 	for (var i = 0; i < data.bars.length; i++) {
 		self=data.bars[i];
+		if (	( Number(self.number)==0 )		||		( data.graphHeight*( (self.number+1)/data.max ) < data.min ) ){
+			high=String(data.min);
+		} else {
+			high=String(data.graphHeight*((self.number+1)/data.max) );
+		}
 		self.left=String( (data.graphWidth/(data.bars.length+1)*(i+1))-(data.barWidth/2) ); //step x index, minus half a bar. 
-		self.height=(Number(self.number)==0)? "auto" : String(data.graphHeight*((self.number+1)/data.max) ) ;
+		self.barHeight=high;
 		self.labelLeft = String(Number(self.left)+Number(data.barWidth)/2-Number(self.abbrWidth)/2);
 	};
 };
@@ -154,11 +180,11 @@ function updatePositions(){
 			"width":String(data.barWidth)+'px',
 			"left":self.left+'px'
 		});
-		bar.delay(100).animate({"height":String(self.height), "opacity":1}, {queue:false}, 900).delay(100);
+		bar.delay(100).animate({"height":String(self.barHeight), "opacity":1}, {queue:false}, 900).delay(100);
 
 		label=self.labelObject; //labels
 		labelPadding = label.height() /3;
-		console.log("ll "+self.labelLeft+" lP"+labelPadding + " lh"+label.height());
+		//console.log("ll "+self.labelLeft+" lP"+labelPadding + " lh"+label.height());
 		label.css({
 			"left":String(Number(self.labelLeft)-(Number(labelPadding)*2))+"px",
 			"padding":String(labelPadding)+'px',
@@ -174,8 +200,7 @@ function updatePositions(){
 		}
 	};
 
-	//##### from update-->
-	//Fade and grow bars
+	//##### 
 	//draw a loading gif in the top right to signify state.
 	//AJAX call to page with new JSON
 		//sucess
@@ -244,7 +269,8 @@ function Graph(JQTableObj) {
 		"avgTextWidth":0, //px, not including the longest
 		"highestNumberIndex":0,//array index
 		"highestNumber":0, //int
-		"totalNum":0 //int
+		"totalNum":0, //int
+		"oldData":0
 	}
 	$('body').data(dataObj);
 	var data=$('body').data();
@@ -265,12 +291,40 @@ function Graph(JQTableObj) {
 	});
 }
 
+function ajaxUpdate(){
+	var data=$('body').data();
+
+	$.get( "show/update", function( newData ) {
+		if (newData==data.lastData) {//nothing new
+			 console.log( "nothing new" );
+		} else { //new data!
+			 console.log( "Data recieved: "+newData );
+			dObj = JSON.parse(newData);
+			for (var i = 0; i < data.bars.length; i++) {
+				var self=data.bars[i];
+				self.number=dObj[self.labelText];
+				if(self.number > data.highestNumber){
+					//console.log("true");
+					data.highestNumber=self.number;
+					data.highestNumberIndex=i;
+				}
+				self.barObject.text(self.number);
+				getData();
+				updatePositions();
+			};
+			// console.dir(dObj);
+		}
+		data.lastData=newData;
+	});
+
+}
+
 $(document).ready(function() { //once the page has loaded and JQuery is ready!
 	if ( $('#tblAnswers').length != 0 ) { //test if we are locally on the 'show' page
 		var graph = new Graph( $("#tblAnswers") );
 	} else { throw ''; } //die without an error, we aren't on the right page if we can't find the graph
 	
-
-
-	//timeout, then update graph? 
+	setInterval(function() {
+		ajaxUpdate();
+	}, 3000); // default two seconds, increases 2x each iteration
 });
