@@ -41,6 +41,7 @@ $_SESSION["debug"]=false; //override logic... just to get rid of the debugs
 			if ( isset($_GET["sh"]) ) { //IF THEY HAVE ALREADY ANSWERED THE QUESTION, SHOW THEM THE ANSWERS
 				// debug($_GET);
 				$dbResult = getAnswerArray($db, $questionNumber);
+				$questionDescription = getQuestionDescription($db, $questionNumber);
 				$answersList = array();
 				foreach ($dbResult as $row ) $answersList[ $row["fldAnswerText"] ] = $row["fldTimesPicked"]; 
 				require_once("v/showAnswer.php"); //view to show the answers.

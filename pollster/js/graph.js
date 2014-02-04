@@ -87,7 +87,7 @@ function getData(){
 		//extracts 'numbers' from table cells
 
 		var h=0;// index counter, this 'each' goes through every table header cell and extracts relevant information
-		console.log('hello');
+		// console.log('hello');
 		data.table.find('th').each(function(){
 			//console.log( $(this ));
 			data.bars.push(new Bar); 
@@ -126,10 +126,10 @@ function getData(){
 	data.min=$.fn.textHeight('M');
 
 	//set the max pixel value depending on how it's configured in the admin console. NOTE: if it can't find #classSize, it defaults to relative
-	if ( !isNaN( $("#classSize").textContent ) ){ // if it is set to 'val'
-		data.max=Number( $("#classSize").textContent )+1; //##### fix classSize ratio
+	if ( !isNaN( $("#classSize").text() ) ){ // if it is set to 'val'
+		data.max=Number( $("#classSize").text() )+1; 
 	} else { // if the max value is a number (ie class size = 10 )
-		data.max=(Number(data.highestNumber)*1.2)+1; 
+		data.max=(Number(data.highestNumber)*1.2)+1;
 	} 
 	//And we can get some more data about the page itself
 	data.pageWidth=$('html').outerWidth();
@@ -166,6 +166,11 @@ function updatePositions(){
 	//function used to update positions and size of various elements drawn via drawGraph()
 
 	var data=$('body').data();
+
+	$('#desc').css({
+		"margin-top":String(data.graphHeight+$('header h1').height()*2)+"px"
+	})
+
 	data.graphObject.css({ // position the graph
 		"width":String(data.graphWidth)+"px",
 		"height":String(data.graphHeight)+"px",
@@ -195,23 +200,17 @@ function updatePositions(){
 			label.next().css({
 							"width":data.graphWidth+'px',
 							//"left":String( Number(data.graphWidth/2) )+'px', //-(Number(self.labelTextWidth)/2)+data.graphIndentX)
-							"bottom":'-'+String(label.height()*4)+'px'
+							"bottom":'-'+String(label.height()*5)+'px'
 							})
 		}
 	};
-
-	//##### 
-	//draw a loading gif in the top right to signify state.
-	//AJAX call to page with new JSON
-		//sucess
-			//for each if a bar number is different, grow it.
-			//kill the loading gif. set a recursive timer or just break?
-		//fail
-			//show a X in the top right to signify failure.
-
 }
 
 function drawGraph() { 
+	// AVAILABLE BAR COLORS
+	barColors = ["#d53e4f",  "#f46d43", "#fee08b",  "#abdda4", "#fdae61", "#3288bd", "#ffffbf", "#66c2a5",  "#e6f598",]
+
+
 	//primary look and feel of graph is done via CSS using #Graph, .bar, and .label selectors
 	//this function inserts the appropriate DOM onto the page, saving each pointer in the data object
 
@@ -222,7 +221,9 @@ function drawGraph() {
 	for (var i = 0; i < data.bars.length; i++) {
 		self=data.bars[i];
 		barElement='<figure id="bar'+String(i)+'" class="bar '+String(i)+'"' //this is the bar itself, 
-					+'style="position:absolute;text-align:center;margin:0;vertical-align:middle;bottom:0;height:auto;opacity:0"'
+					+'style="background-color:'+barColors.shift()+';'
+					+'position:absolute;text-align:center;margin:0;'
+					+'vertical-align:middle;bottom:0;height:auto;opacity:0"'
 					+'">'+self.number
 				+'</figure>';
 		labelElement='<p class="label '+String(i)+'" id="label'+String(i)+'" style="position:absolute;margin:0;" >'+self.abbrText+'</p>';
@@ -319,7 +320,9 @@ function ajaxUpdate(){
 
 }
 
+
 $(document).ready(function() { //once the page has loaded and JQuery is ready!
+
 	if ( $('#tblAnswers').length != 0 ) { //test if we are locally on the 'show' page
 		var graph = new Graph( $("#tblAnswers") );
 	} else { throw ''; } //die without an error, we aren't on the right page if we can't find the graph

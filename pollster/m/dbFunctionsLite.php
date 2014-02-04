@@ -57,4 +57,10 @@
 			exit;
 		}
 	}
+
+	function getQuestionDescription($db, $questionNumber){
+		$d = $db->query('SELECT "fldDescription" FROM Question WHERE fldQuestionNumber="'.$questionNumber.'";');
+		$desc = $d -> fetchArray();
+		return $desc["fldDescription"];
+	}
 ?>

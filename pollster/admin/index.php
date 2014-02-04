@@ -37,7 +37,7 @@ if ($securityCheck){
 						$sani = htmlspecialchars($_POST['maxVal']);
 						updateMax($db, $sani);
 					}
-					header( 'Location: '.$rootLoc."/admin/?state='ms'" );
+					header( 'Location: '.$rootLoc."/admin/?state=max" );
 				break;
 
 				case 'adm':
@@ -46,12 +46,19 @@ if ($securityCheck){
 						foreach ($newList as $value) $value=trim($value);
 						writeCSV($accessFile, $newList);
 					}
-					header( 'Location: '.$rootLoc."/admin/?state='as'" );
+					header( 'Location: '.$rootLoc."/admin/?state=adm" );
+				break;
+
+				case 'desc':
+					if (isset($_POST['fldDescription']) && isset($_POST['qn'])) {
+						addDescription($db, $_POST['qn'], htmlspecialchars($_POST['fldDescription'], ENT_QUOTES) );
+					}
+					header( 'Location: '.$rootLoc."/admin/?state=desc" );
 				break;
 
 				case 'del':
 					deleteTables($db);
-					header( 'Location: '.$rootLoc."/admin/?state='ds'" );
+					header( 'Location: '.$rootLoc."/admin/?state=del" );
 				break;
 
 				case 'sub': //state is sub -> submits answers and goes back to default runstate.
@@ -60,7 +67,7 @@ if ($securityCheck){
 							addAnswer($db, $_POST["fldQuestionNumber"], $value);
 						}
 					}
-					header( 'Location: '.$rootLoc."/admin/?state='ss'" );
+					header( 'Location: '.$rootLoc."/admin/?state=ss" );
 					break;
 				default: //admin 'landing page'. Show the question form
 					require_once('../v/head.php'); //doctype, head, body. 

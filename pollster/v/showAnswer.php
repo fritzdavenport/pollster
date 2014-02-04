@@ -18,3 +18,12 @@
 			echo "</tbody>";
 		?>
 	</table>
+	<p id="desc">
+		<?php 
+			if (!!$questionDescription && !($questionDescription == 'null')){ 
+				echo $questionDescription;
+			} else { 
+				echo "<span style='display:none;'>no description set</span>";
+			}
+		?>
+	</p>

@@ -20,8 +20,13 @@
 		return $line_of_text;
 	}
 
-	function writeCSV($csvFile, $array){ //
-		$fp = fopen($csvFile, 'w');
+	function writeCSV($csvFile, $array){ 
+		try {
+			$fp = fopen($csvFile, 'w');
+		} catch (Exception $e) {
+			echo "Unable to open access file for writing";
+		}
+
 		fputcsv($fp, $array);
 		fclose($fp);
 	}
@@ -42,7 +47,7 @@
 	}
 
 	function createQuestionTable ($db){
-		$qta = $db->exec('CREATE TABLE Question '.'(fldQuestionNumber INTEGER PRIMARY KEY, fldQuestionText TEXT NOT NULL, fldRedirect TEXT);');
+		$qta = $db->exec('CREATE TABLE Question '.'(fldQuestionNumber INTEGER PRIMARY KEY, fldQuestionText TEXT NOT NULL, fldDescription TEXT);');
 		if ($qta){ debug("table Question hadn't been made, but I got it.</br>");
 		} else { debug("Something went wrong with Question table creation"); 
 		}
@@ -70,11 +75,11 @@
 	}
 
 	function updateMax($db, $newValue){
-		$db->exec('UPDATE App SET fldOptionValue = '.$newValue.' WHERE fldOptionName="max";');
+		$db->exec('UPDATE App SET fldOptionValue = "'.$newValue.'" WHERE fldOptionName="max";');
 	}
 
-	function addQuestion($db, $qtext, $redirect="null"){//ques fldQuestionNumber, fldQuestionText, fldRefIn, fldRedirect
-		$db->exec('INSERT into Question VALUES (null, "'.$qtext.'", "'.$redirect.'");'); 
+	function addQuestion($db, $qtext, $description="null"){//ques fldQuestionNumber, fldQuestionText, fldRefIn, fldDescription
+		$db->exec('INSERT into Question VALUES (null, "'.$qtext.'", "'.$description.'");'); 
 		$result = $db -> query("SELECT last_insert_rowid() FROM Question");
 		$rArr = $result -> fetchArray();
 		debug("INSERT ID: ".$rArr[0]);
@@ -92,14 +97,16 @@
 		return $as;
 	}
 
-
+	function addDescription($db, $questionNumber, $description){
+		$db->exec('UPDATE Question SET fldDescription = "'.$description.'" WHERE fldQuestionNumber="'.$questionNumber.'";');
+	}
 
 	function addAnswer($db, $questionNumber, $answerText){
 		$db->exec('INSERT into Answer VALUES (null,"'.$questionNumber.'","'.$answerText.'",0)');
 	}
 
 //ans fldAnswerNumber, fldQuestionNumber, fldAnswerText, fldTimesPicked   
-//ques fldQuestionNumber, fldQuestionText, fldRefIn, fldRedirect
+//ques fldQuestionNumber, fldQuestionText, fldRefIn, fldDescription
 
 	function deleteQuestion($db, $questionNumber){ #delete a question, also follow and delete answers. 
 		$db->exec('DELETE FROM Answer WHERE fldQuestionNumber='.$questionNumber.' AND fldAnswerNumber='.$ans.';');

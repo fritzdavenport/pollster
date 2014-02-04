@@ -11,7 +11,15 @@
 					'"'.$qArr["fldQuestionText"].'"'
 				."</td>"."<td>".
 					"<a href='".$rootLoc."/question".$qArr["fldQuestionNumber"]."'>Link</a>"
-				."</td><td>Redirect: <input READONLY type='text' value='".($qArr['fldRedirect']!="null"?$qArr["fldRedirect"]:"Not Set")."' />"
+				."</td><td>"
+				."<form id='desc' action='".$_SERVER['PHP_SELF']."' method='post' >"
+					."Description: <INPUT TYPE=SUBMIT VALUE='submit' /><br>"
+					."<input type=hidden name='s' value='desc' />"
+					."<input type=hidden name='qn' value='".$qArr["fldQuestionNumber"]."' />"
+					."<textarea name='fldDescription' >"
+						.($qArr['fldDescription']!="null" ? $qArr["fldDescription"]:"Not Set")
+					."</textarea>"
+				."</form>"
 				."</td></tr>";
 		while ( $aArr = $a->fetchArray() ){
 			echo "<tr class='answer'><th scope='row' class='answer'>Answer ".
