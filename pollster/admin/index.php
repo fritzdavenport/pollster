@@ -43,6 +43,7 @@ if ($securityCheck){
 				case 'adm':
 					if (isset($_POST['accessList'])) {
 						$newList = explode(",", $_POST['accessList']);
+						$newList = preg_replace('/\s+/', '', $newList);
 						foreach ($newList as $value) $value=trim($value);
 						writeCSV($accessFile, $newList);
 					}
